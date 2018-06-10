@@ -1,0 +1,130 @@
+/* Put your css in here */
+.bar {
+  background-color: #333;
+  color: #eee;
+  margin: 0;
+  padding: 0.5em;
+}
+
+.row {
+  border-bottom: 1px solid #ccc;
+  padding: 1em;
+}
+
+.container {
+  min-width: 100%;
+}
+
+.hex {
+  margin-left: 130px;
+  margin-top: -25px;
+  position: absolute;
+}
+
+li.file {
+  margin-left: 1em;
+  list-style: none;
+  display: inline-block;
+  font-size: 70%;
+}
+
+form {
+  background-color: #eee;
+  color: #333;
+  padding: 1em;
+}
+
+form legend {
+  text-transform: uppercase;
+  color: #222;
+  font-size: 100%;
+}
+
+.has-success label span {
+  color: #333;
+}
+
+.form-group label.control-label {
+  color: #333;
+  overflow: hidden;
+  white-space: nowrap;
+  font-size: 0.9em;
+  font-weight: 500;
+}
+
+.form-group {
+  margin-left: 5px;
+}
+
+.list-group .list-group-item {
+  display: inline-block;
+  margin: 0.5em;
+  width: 350px;
+}
+
+form .has-success .help-block {
+ color: #737373;
+ z-index: -1;
+}
+
+.checkbox label span {
+  font-weight: bold;
+}
+
+.form-group .radio {
+  z-index: 100;
+}
+
+
+.form-group .help-block {
+  position: absolute;
+  background-color: #fefefe;
+  display: none;
+}
+
+
+.form-group {
+  /* float: left; */
+  /* min-width: 40%; */
+  flex: 1;
+}
+
+form fieldset {
+  /* clear: both; */
+}
+
+span.highlighted {
+  color: #5bc0de;
+  font-weight: bold;
+}
+
+input.foldername {
+  width: 50%;
+}
+
+form fieldset input[id="fileName"] {
+  font-size: 80%;
+  min-width: 320px;
+}
+
+.form-group textarea.form-control{
+  height: 300px;
+  width: 100%;
+}
+
+bootstrap-decorator fieldset {
+  display: flex;
+  flex-direction: row;
+}
+
+fieldset sf-decorator {
+  flex: 0 0.5 auto;
+}
+
+legend.btn {
+  margin: 0.2em;
+}
+
+.form-group label {
+  margin: 0;
+}

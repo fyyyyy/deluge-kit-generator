@@ -1,0 +1,48 @@
+input[type="radio"] {
+  position: absolute;
+  left: -9999px;
+}
+span.glyphicon.not{
+  color: rgba(101,109,127, 1);
+  position: absolute;
+  left: -5px;
+  z-index: -10;
+  line-height: 1.5em;
+  width: 1.5em;
+  height: 1.5em;
+  background-color: rgba(101,109,127, 1);
+  border-radius: 0em;
+  margin: -0.25em;
+}
+
+label span.glyphicon {
+  color: rgba(44,193,133, 1);
+  position: absolute;
+  left: -5px;
+}
+
+
+
+
+input[type=checkbox] {
+  position: absolute;
+  left: -9999px;
+}
+
+input[type=checkbox] ~ span::before  {
+  content: '\2713';
+  color: rgba(101,109,127, 1);
+  display: inline-block;
+  text-align: center;
+  line-height: 1.5em;
+  width: 1.5em;
+  height: 1.5em;
+  background-color: rgba(101,109,127, 1);
+  border-radius: 0em;
+  margin: 0.25em;
+}
+
+
+input[type=checkbox]:checked ~ span::before {
+  color: rgba(44,193,133, 1);
+}

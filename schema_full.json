@@ -1,0 +1,519 @@
+{
+  "type": "object",
+  "required": [],
+  "properties": {
+    "kit": {
+      "type": "object",
+      "required": [],
+      "properties": {
+        "lpfMode": {
+          "type": "string"
+        },
+        "modFXType": {
+          "type": "string"
+        },
+        "delay": {
+          "type": "object",
+          "required": [],
+          "properties": {
+            "pingPong": {
+              "type": "string"
+            },
+            "analog": {
+              "type": "string"
+            },
+            "syncLevel": {
+              "type": "string"
+            }
+          }
+        },
+        "modFXCurrentParam": {
+          "type": "string"
+        },
+        "currentFilterType": {
+          "type": "string"
+        },
+        "defaultParams": {
+          "type": "object",
+          "required": [],
+          "properties": {
+            "delay": {
+              "type": "object",
+              "required": [],
+              "properties": {
+                "rate": {
+                  "type": "string"
+                },
+                "feedback": {
+                  "type": "string"
+                }
+              }
+            },
+            "reverbAmount": {
+              "type": "string"
+            },
+            "volume": {
+              "type": "string"
+            },
+            "pan": {
+              "type": "string"
+            },
+            "lpf": {
+              "type": "object",
+              "required": [],
+              "properties": {
+                "frequency": {
+                  "type": "string"
+                },
+                "resonance": {
+                  "type": "string"
+                }
+              }
+            },
+            "hpf": {
+              "type": "object",
+              "required": [],
+              "properties": {
+                "frequency": {
+                  "type": "string"
+                },
+                "resonance": {
+                  "type": "string"
+                }
+              }
+            },
+            "modFXDepth": {
+              "type": "string"
+            },
+            "modFXRate": {
+              "type": "string"
+            },
+            "stutterRate": {
+              "type": "string"
+            },
+            "sampleRateReduction": {
+              "type": "string"
+            },
+            "bitCrush": {
+              "type": "string"
+            },
+            "equalizer": {
+              "type": "object",
+              "required": [],
+              "properties": {
+                "bass": {
+                  "type": "string"
+                },
+                "treble": {
+                  "type": "string"
+                },
+                "bassFrequency": {
+                  "type": "string"
+                },
+                "trebleFrequency": {
+                  "type": "string"
+                }
+              }
+            },
+            "modFXOffset": {
+              "type": "string"
+            },
+            "modFXFeedback": {
+              "type": "string"
+            }
+          }
+        },
+        "soundSources": {
+          "type": "object",
+          "required": [],
+          "properties": {
+            "sound": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "required": [],
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  },
+                  "osc1": {
+                    "type": "object",
+                    "required": [],
+                    "properties": {
+                      "type": {
+                        "type": "string"
+                      },
+                      "transpose": {
+                        "type": "string"
+                      },
+                      "cents": {
+                        "type": "string"
+                      },
+                      "loopMode": {
+                        "type": "string"
+                      },
+                      "reversed": {
+                        "type": "string"
+                      },
+                      "timeStretchEnable": {
+                        "type": "string"
+                      },
+                      "timeStretchAmount": {
+                        "type": "string"
+                      },
+                      "fileName": {
+                        "type": "string"
+                      },
+                      "zone": {
+                        "type": "object",
+                        "required": [],
+                        "properties": {
+                          "startMilliseconds": {
+                            "type": "string"
+                          },
+                          "endMilliseconds": {
+                            "type": "string"
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "osc2": {
+                    "type": "object",
+                    "required": [],
+                    "properties": {
+                      "type": {
+                        "type": "string"
+                      },
+                      "transpose": {
+                        "type": "string"
+                      },
+                      "cents": {
+                        "type": "string"
+                      },
+                      "loopMode": {
+                        "type": "string"
+                      },
+                      "reversed": {
+                        "type": "string"
+                      },
+                      "timeStretchEnable": {
+                        "type": "string"
+                      },
+                      "timeStretchAmount": {
+                        "type": "string"
+                      },
+                      "fileName": {
+                        "type": "string"
+                      },
+                      "zone": {
+                        "type": "object",
+                        "required": [],
+                        "properties": {
+                          "startMilliseconds": {
+                            "type": "string"
+                          },
+                          "endMilliseconds": {
+                            "type": "string"
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "polyphonic": {
+                    "type": "string"
+                  },
+                  "clippingAmount": {
+                    "type": "string"
+                  },
+                  "voicePriority": {
+                    "type": "string"
+                  },
+                  "lfo1": {
+                    "type": "object",
+                    "required": [],
+                    "properties": {
+                      "type": {
+                        "type": "string"
+                      },
+                      "syncLevel": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "lfo2": {
+                    "type": "object",
+                    "required": [],
+                    "properties": {
+                      "type": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "mode": {
+                    "type": "string"
+                  },
+                  "unison": {
+                    "type": "object",
+                    "required": [],
+                    "properties": {
+                      "num": {
+                        "type": "string"
+                      },
+                      "detune": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "compressor": {
+                    "type": "object",
+                    "required": [],
+                    "properties": {
+                      "syncLevel": {
+                        "type": "string"
+                      },
+                      "attack": {
+                        "type": "string"
+                      },
+                      "release": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "lpfMode": {
+                    "type": "string"
+                  },
+                  "modFXType": {
+                    "type": "string"
+                  },
+                  "delay": {
+                    "type": "object",
+                    "required": [],
+                    "properties": {
+                      "pingPong": {
+                        "type": "string"
+                      },
+                      "analog": {
+                        "type": "string"
+                      },
+                      "syncLevel": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "defaultParams": {
+                    "type": "object",
+                    "required": [],
+                    "properties": {
+                      "arpeggiatorGate": {
+                        "type": "string"
+                      },
+                      "portamento": {
+                        "type": "string"
+                      },
+                      "compressorShape": {
+                        "type": "string"
+                      },
+                      "oscAVolume": {
+                        "type": "string"
+                      },
+                      "oscAPulseWidth": {
+                        "type": "string"
+                      },
+                      "oscBVolume": {
+                        "type": "string"
+                      },
+                      "oscBPulseWidth": {
+                        "type": "string"
+                      },
+                      "noiseVolume": {
+                        "type": "string"
+                      },
+                      "volume": {
+                        "type": "string"
+                      },
+                      "pan": {
+                        "type": "string"
+                      },
+                      "lpfFrequency": {
+                        "type": "string"
+                      },
+                      "lpfResonance": {
+                        "type": "string"
+                      },
+                      "hpfFrequency": {
+                        "type": "string"
+                      },
+                      "hpfResonance": {
+                        "type": "string"
+                      },
+                      "envelope1": {
+                        "type": "object",
+                        "required": [],
+                        "properties": {
+                          "attack": {
+                            "type": "string"
+                          },
+                          "decay": {
+                            "type": "string"
+                          },
+                          "sustain": {
+                            "type": "string"
+                          },
+                          "release": {
+                            "type": "string"
+                          }
+                        }
+                      },
+                      "envelope2": {
+                        "type": "object",
+                        "required": [],
+                        "properties": {
+                          "attack": {
+                            "type": "string"
+                          },
+                          "decay": {
+                            "type": "string"
+                          },
+                          "sustain": {
+                            "type": "string"
+                          },
+                          "release": {
+                            "type": "string"
+                          }
+                        }
+                      },
+                      "lfo1Rate": {
+                        "type": "string"
+                      },
+                      "lfo2Rate": {
+                        "type": "string"
+                      },
+                      "modulator1Amount": {
+                        "type": "string"
+                      },
+                      "modulator1Feedback": {
+                        "type": "string"
+                      },
+                      "modulator2Amount": {
+                        "type": "string"
+                      },
+                      "modulator2Feedback": {
+                        "type": "string"
+                      },
+                      "carrier1Feedback": {
+                        "type": "string"
+                      },
+                      "carrier2Feedback": {
+                        "type": "string"
+                      },
+                      "modFXRate": {
+                        "type": "string"
+                      },
+                      "modFXDepth": {
+                        "type": "string"
+                      },
+                      "delayRate": {
+                        "type": "string"
+                      },
+                      "delayFeedback": {
+                        "type": "string"
+                      },
+                      "reverbAmount": {
+                        "type": "string"
+                      },
+                      "arpeggiatorRate": {
+                        "type": "string"
+                      },
+                      "patchCables": {
+                        "type": "object",
+                        "required": [],
+                        "properties": {
+                          "patchCable": {
+                            "type": "array",
+                            "items": {
+                              "type": "object",
+                              "required": [],
+                              "properties": {
+                                "source": {
+                                  "type": "string"
+                                },
+                                "destination": {
+                                  "type": "string"
+                                },
+                                "amount": {
+                                  "type": "string"
+                                }
+                              }
+                            }
+                          }
+                        }
+                      },
+                      "stutterRate": {
+                        "type": "string"
+                      },
+                      "sampleRateReduction": {
+                        "type": "string"
+                      },
+                      "bitCrush": {
+                        "type": "string"
+                      },
+                      "equalizer": {
+                        "type": "object",
+                        "required": [],
+                        "properties": {
+                          "bass": {
+                            "type": "string"
+                          },
+                          "treble": {
+                            "type": "string"
+                          },
+                          "bassFrequency": {
+                            "type": "string"
+                          },
+                          "trebleFrequency": {
+                            "type": "string"
+                          }
+                        }
+                      },
+                      "modFXOffset": {
+                        "type": "string"
+                      },
+                      "modFXFeedback": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "midiKnobs": {
+                    "type": "string"
+                  },
+                  "modKnobs": {
+                    "type": "object",
+                    "required": [],
+                    "properties": {
+                      "modKnob": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "required": [],
+                          "properties": {
+                            "controlsParam": {
+                              "type": "string"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "selectedDrumIndex": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}
