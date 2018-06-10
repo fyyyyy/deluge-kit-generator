@@ -102,28 +102,28 @@ TEST_XML = `<?xml version="1.0" encoding="UTF-8"?>
 				<arpeggiatorGate>0x00000000</arpeggiatorGate>
 				<portamento>0x80000000</portamento>
 				<compressorShape>0xDC28F5B2</compressorShape>
-				<oscAVolume>0x7FFFFFFF</oscAVolume>
+				<oscAVolume>0x7FFFFFD2</oscAVolume>
 				<oscAPulseWidth>0x00000000</oscAPulseWidth>
-				<oscBVolume>0xF0A3D6F6</oscBVolume>
+				<oscBVolume>0x7FFFFFD2</oscBVolume>
 				<oscBPulseWidth>0x00000000</oscBPulseWidth>
 				<noiseVolume>0x80000000</noiseVolume>
 				<volume>0x4CCCCCA8</volume>
 				<pan>0x00000000</pan>
-				<lpfFrequency>0x1999997E</lpfFrequency>
+				<lpfFrequency>0x4CCCCCA8</lpfFrequency>
 				<lpfResonance>0x80000000</lpfResonance>
 				<hpfFrequency>0x80000000</hpfFrequency>
 				<hpfResonance>0x80000000</hpfResonance>
 				<envelope1>
 					<attack>0x80000000</attack>
-					<decay>0xE6666654</decay>
+					<decay>0x80000000</decay>
 					<sustain>0x7FFFFFD2</sustain>
-					<release>0xE2000000</release>
+					<release>0x8F5C28F3</release>
 				</envelope1>
 				<envelope2>
-					<attack>0xE6666654</attack>
-					<decay>0xE6666654</decay>
-					<sustain>0xFFFFFFE9</sustain>
-					<release>0xE6666654</release>
+					<attack>0x80000000</attack>
+					<decay>0x80000000</decay>
+					<sustain>0x7FFFFFD2</sustain>
+					<release>0x8F5C28F3</release>
 				</envelope2>
 				<lfo1Rate>0x1999997E</lfo1Rate>
 				<lfo2Rate>0x00000000</lfo2Rate>
