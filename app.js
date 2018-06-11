@@ -259,7 +259,7 @@ app.controller('MainCtrl', function($scope) {
         }
       });
 
-      return nearest;
+      return _.cloneDeep(nearest);
     }
     
     return files;
@@ -365,6 +365,8 @@ app.controller('MainCtrl', function($scope) {
   function transposeNearest(nearest, osc, folderName) {
     if (!nearest) return;
     // Missing sample? => transpose nearest sample
+    
+    console.log('​transposeNearest -> ', nearest.name, nearest.transpose);
     osc.fileName = folderName + '/' + nearest.name;
     osc.transpose = nearest.transpose;
   }
