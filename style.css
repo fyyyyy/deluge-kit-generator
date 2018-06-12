@@ -1,4 +1,13 @@
 /* Put your css in here */
+textarea.preview {
+  position: absolute;
+  width: 90%;
+  left: 5%;
+  top: 180px;
+  height: 60%;
+  z-index: 1000;
+  box-shadow: 5px 5px 5px #777;
+}
 .bar {
   background-color: #333;
   color: #eee;
