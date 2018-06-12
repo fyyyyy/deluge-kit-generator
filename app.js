@@ -279,7 +279,7 @@ app.controller('MainCtrl', function($scope) {
 
 
   function init() {
-    $scope.filename = "TEST.xml";
+    $scope.filename = "KIT999.XML";
     var json = toJson(TEST_XML);
   }
   init();

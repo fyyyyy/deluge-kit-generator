@@ -6,7 +6,7 @@
   <title>Deluge KIT Generator</title>
   <script>
     document.write('<base href="' + document.location + '" />');
-  </script>
+    </script>
   <link rel="stylesheet" href="style.css" />
   <link rel="stylesheet" href="radio.css" />
   <link href="libs/bootstrap.min.css" rel="stylesheet">
@@ -14,17 +14,26 @@
 
 <body ng-controller="MainCtrl" class="container">
   <div class="bar">
-    <h2>DELUGE KIT GENERATOR 1.0</h2>by frankyyyy ät live.com
+    <h2>
+      <i class="glyphicon glyphicon-road"></i>
+      DELUGE KIT GENERATOR 1.0
+    </h2>by frankyyyy ät live.com
   </div>
   
   <div class="row">
     <div class="col-md-7">
-      <h4>KIT .xml File</h4>
-      <input class="btn btn-info btn-file" type="file" id="file" name="file" onchange="angular.element(this).scope().loadFile(this)" title="{{'Loaded ' + filename}}"/>
+      <h4>KIT .xml File (optional)</h4>
+      <input class="btn btn btn-file" type="file" id="file" name="file" onchange="angular.element(this).scope().loadFile(this)" title="{{'Loaded ' + filename}}"/>
     </div>
     <div class="col-md-4">
-      <button class="btn btn-primary" ng-click="saveFile()">Save XML File</button>
-      &nbsp;<a class="btn btn-info" ng-click="togglePreview=!togglePreview">Preview XML</a>
+      <button class="btn btn-primary" ng-click="saveFile()">
+        <i class="glyphicon glyphicon-floppy-disk"></i>
+        Save XML File
+      </button>
+      &nbsp;<a class="btn btn-info" ng-click="togglePreview=!togglePreview">
+        <i class="glyphicon glyphicon-eye-open"></i>
+        Preview XML
+      </a>
       <textarea ng-show="togglePreview" class="form-control" ng-model="output" name="xml-output"></textarea>
       <br/>
       <!-- <span class="text-danger">CAUTION: Backup your deluge KIT file before overwriting!</span> -->
@@ -34,7 +43,8 @@
   <div class="row">
     <div class="col-md-5">
       <h4>OSC1 Sample Folder:</h4>
-      <input  class="foldername"type="string" ng-model="folderName1">
+       Specify folder
+       <input  class="foldername"type="string" ng-model="folderName1">
       <input type="file" class="btn btn-info btn-file" webkitdirectory mozdirectory id="osc1files" title="OSC1 sample directory" onchange="angular.element(this).scope().loadedOSC(this, 1)"/>
     </div>
     <div class="col-md-7">    
@@ -51,6 +61,7 @@
   <div class="row">
     <div class="col-md-5">
       <h4>OSC2 Sample Folder:</h4>
+      Specify folder
       <input class="foldername" type="string" ng-model="folderName2">
       <input type="file" class="btn btn-info btn-file" webkitdirectory mozdirectory id="osc2files" title="OSC2 sample directory" onchange="angular.element(this).scope().loadedOSC(this, 2)"/>
     </div>
@@ -68,19 +79,28 @@
   <div class="row" ng-if="model">
     <div class="row">
       <div class="col-md-5">
-        <button class="btn btn-info" ng-class="{'btn-warning': toggleGlobal}" ng-click="toggleGlobal = !toggleGlobal">Global Sample Settings</button>
+        <button class="btn btn-info" ng-class="{'btn-warning': toggleGlobal}" ng-click="toggleGlobal = !toggleGlobal">
+          <i class="glyphicon glyphicon-globe"></i>
+          Global Sample Settings
+        </button>
       </div>
       <div class="col-sm-5">
-        <button class="btn btn-danger" ng-click="generate()" ng-if="sampleNames1">APPLY FOLDER SAMPLES</button>
-        <br/>( Overrides all individual samples for OSC1 and OSC2 with global sample settings! )
+        <button class="btn btn-success" ng-click="generate()" ng-if="sampleNames1">
+          <i class="glyphicon glyphicon-copy"></i>
+          &nbsp;APPLY FOLDER SAMPLES
+        </button>
+        <br/>( Creates sample entries for each file in the OSC1 and OSC2 folders. Overrides all individual sample settings with global sample settings! )
       </div>
     </div>
     <form ng-show="toggleGlobal" class="col" sf-schema="schema_osc" sf-form="['*']" sf-model="osc">
     </form>
   </div>
-
+  
   <div class="row" ng-if="model">
-    <button class="btn btn-info" ng-class="{'btn-warning': toggleDetail}" ng-click="toggleDetail = !toggleDetail">Individual Sample settings</button>
+    <button class="btn btn-info" ng-class="{'btn-warning': toggleDetail}" ng-click="toggleDetail = !toggleDetail">
+      <i class="glyphicon glyphicon-wrench"></i>
+      Individual Sample settings
+    </button>
     <form ng-show="toggleDetail" class="col" sf-schema="schema" sf-form="form" sf-model="model"></form>
   </div>
 
