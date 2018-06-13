@@ -51,7 +51,7 @@ TEST_XML = `<?xml version="1.0" encoding="UTF-8"?>
 				<reversed>0</reversed>
 				<timeStretchEnable>0</timeStretchEnable>
 				<timeStretchAmount>0</timeStretchAmount>
-				<fileName>SAMPLES/PIANO/Boesendorfer/64/A0_PU1.WAV</fileName>
+				<fileName>SAMPLES/PLEASE/SPECIFY/PATH/A0_PU1.WAV</fileName>
 				<zone>
 					<startMilliseconds>0</startMilliseconds>
 					<endMilliseconds>12931</endMilliseconds>
@@ -238,7 +238,7 @@ TEST_XML = `<?xml version="1.0" encoding="UTF-8"?>
 				<reversed>0</reversed>
 				<timeStretchEnable>0</timeStretchEnable>
 				<timeStretchAmount>0</timeStretchAmount>
-				<fileName>SAMPLES/PIANO/Boesendorfer/64/A#0_PU1.WAV</fileName>
+				<fileName>SAMPLES/PLEASE/SPECIFY/PATH/A#0_PU1.WAV</fileName>
 				<zone>
 					<startMilliseconds>0</startMilliseconds>
 					<endMilliseconds>12931</endMilliseconds>
@@ -425,7 +425,7 @@ TEST_XML = `<?xml version="1.0" encoding="UTF-8"?>
 				<reversed>0</reversed>
 				<timeStretchEnable>0</timeStretchEnable>
 				<timeStretchAmount>0</timeStretchAmount>
-				<fileName>SAMPLES/PIANO/Boesendorfer/64/B0_PU1.WAV</fileName>
+				<fileName>SAMPLES/PLEASE/SPECIFY/PATH/B0_PU1.WAV</fileName>
 				<zone>
 					<startMilliseconds>0</startMilliseconds>
 					<endMilliseconds>12931</endMilliseconds>
@@ -612,7 +612,7 @@ TEST_XML = `<?xml version="1.0" encoding="UTF-8"?>
 				<reversed>0</reversed>
 				<timeStretchEnable>0</timeStretchEnable>
 				<timeStretchAmount>0</timeStretchAmount>
-				<fileName>SAMPLES/PIANO/Boesendorfer/64/C1_PU1.WAV</fileName>
+				<fileName>SAMPLES/PLEASE/SPECIFY/PATH/C1_PU1.WAV</fileName>
 				<zone>
 					<startMilliseconds>0</startMilliseconds>
 					<endMilliseconds>12931</endMilliseconds>
@@ -799,7 +799,7 @@ TEST_XML = `<?xml version="1.0" encoding="UTF-8"?>
 				<reversed>0</reversed>
 				<timeStretchEnable>0</timeStretchEnable>
 				<timeStretchAmount>0</timeStretchAmount>
-				<fileName>SAMPLES/PIANO/Boesendorfer/64/C#1_PU1.WAV</fileName>
+				<fileName>SAMPLES/PLEASE/SPECIFY/PATH/C#1_PU1.WAV</fileName>
 				<zone>
 					<startMilliseconds>0</startMilliseconds>
 					<endMilliseconds>15102</endMilliseconds>

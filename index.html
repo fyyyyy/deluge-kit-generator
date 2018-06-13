@@ -55,9 +55,9 @@
        <input  class="foldername"type="string" ng-model="folderName1">
       <input type="file" class="btn btn-info btn-file" multiple id="osc1files" title="OSC1 sample directory" onchange="angular.element(this).scope().loadedOSC(this, 1)"/>
       <br/>
-      <label for="lowerBound">Lower Bound</label>
+      <label for="lowerBound">Lowest Note</label>
       <select ng-options="idx as note for (idx, note) in allNotes" name="lowerBound" ng-model="lowerBound"></select>
-      <label for="upperBound">Upper Bound</label>
+      <label for="upperBound">Highest Note</label>
       <select ng-options="idx as note for (idx, note) in allNotes" name="upperBound" ng-model="upperBound"></select>
     </div>
     <div class="col-md-7">    
