@@ -1,8 +1,15 @@
 var app = angular.module('plunker', ['ngSanitize', 'schemaForm', 'ui.knob']);
 
+var patterns = {
+  'note:sign:octave': /(A|B|C|D|E|F|G)(#|b)?(\d)/,
+  'value': /(0\d\d)()()/
+}
+
 app.filter('highlight', function ($sce) {
-  return function (text, phrase) {
-    if (phrase) text = text.replace(new RegExp(phrase, 'g'), '<span class="highlighted">$1</span>');
+  return function (text) {
+    _.forEach(patterns, function (regex) {
+      text = text.replace(new RegExp(regex, 'g'), '<span class="highlighted">$1$2$3</span>');
+    });
     return $sce.trustAsHtml(text)
   }
 })
@@ -19,7 +26,33 @@ app.controller('MainCtrl', function($scope) {
 
   var x2js = new X2JS();
 
-  $scope.search = /((A|B|C|D|E|F|G)(#|b)?(\d))/;
+  $scope.search = function (fileName) {
+    var results = _.map(patterns, function (regex, groups) {
+      groups = groups.split(':');
+      
+      var matches = fileName.match(regex);
+      var map = {}
+      
+      if (matches) _.forEach(groups, function (group, index) {
+        map[group] = matches[index + 1];
+      });
+      return map;
+    });
+    
+    return _.first(_.reject(results, _.isEmpty));
+  };
+
+  var noteMap = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B'];
+
+  $scope.allNotes = _.flatten(_.times(8, function (octave) {
+    return _.map(noteMap, function (note, i) {
+      return note + octave;
+    });
+  }));
+  
+  console.log('​$scope.allNotes', $scope.allNotes);
+  $scope.lowerBound = '0';
+  $scope.upperBound = '95';
 
   $scope.schema = SCHEMA;
   $scope.schema_osc = SCHEMA_OSC;
@@ -177,31 +210,20 @@ app.controller('MainCtrl', function($scope) {
   }
 
 
-  function calcNoteValue(files) {
-    var signMap = { '#': 1, 'b': -1 };
-    var noteMap = { 'C': 0, 'D': 2, 'E': 4, 'F': 5, 'G': 7, 'A': 9, 'B': 11 };
-
+  function calcAllNoteValues(files) {
     return _.map(files, function(file) {
       // regex matches
-      var matches = file.name.match($scope.search);
+      var matches = $scope.search(file.name);
+      
+      console.log('​calcAllNoteValues -> matches', matches);
 
       if (!matches) {
         console.error('could not identify note in name', matches, file);
         return;
       };
       
-      // Note
-      var value = noteMap[matches[2]];
-      
-      // Octave
-      value += (Number(matches[4] * 12));
-      
-      // Sharp or Flat ? # or b ?
-      var sign = matches[3];
-      if (sign) value += signMap[sign];
-      
-      // Set note value
-      file.value = value;
+      // Calc note value unless known
+      file.value = (Number(matches.value) - 24) || calcNoteValue(matches.note, matches.sign, matches.octave);;
 
       // This is not a placeholder
       file.placeholder = false;
@@ -210,18 +232,33 @@ app.controller('MainCtrl', function($scope) {
     });
   }
 
+  function calcNoteValue(name, sharpOrFlat, octave) {
+    var signMap = { '#': 1, 'b': -1 };
+    var noteValue = { 'C': 0, 'D': 2, 'E': 4, 'F': 5, 'G': 7, 'A': 9, 'B': 11 };
+
+    // Note Name (C, D, E...)
+    var value = noteValue[name];
+
+    // Octave (0, 1, 2, 3...)
+    value += (Number(octave * 12));
+
+    // Sharp or Flat (#, b)
+    var sign = sharpOrFlat;
+    if (sign) value += signMap[sign];
+    return value;
+  }
+
   function fillMissingSamples(files, range) {
 
     // range is the reference for min max note values to fill up
-    var min = _.min(range || _.map(files, 'value'));
+    var min = Number($scope.lowerBound);
     console.log('​fillMissingSamples -> min', min);
-    var max = _.max(range || _.map(files, 'value'));
+    var max = Number($scope.upperBound);
     console.log('​fillMissingSamples -> max', max);
     
 
     _.times(max - min + 1, function (n) {
       var value = min + n;
-      var noteMap = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B'];
       var exists = _.find(files, { value: value });
 
       if (!exists) {
@@ -246,9 +283,13 @@ app.controller('MainCtrl', function($scope) {
 
 
     function findNearestSample(files, value) {
-      // pitching up sounds better than pitching down !?
-      var searchPattern = [-1, 1, -2, 2, -3, 3, -4, 4];
-      var nearest;
+      var maxTranspose = 36;
+      var searchPattern = _.flatten(_.map(_.range(1, maxTranspose + 1), function(i) {
+        // pitching up sounds better than pitching down !?
+        return [-i, i];
+      }));
+
+      var nearest = null;
 
       _.forEach(searchPattern, function(position) {
         nearest = _.find(files, { value: value + position, placeholder: false });
@@ -269,7 +310,7 @@ app.controller('MainCtrl', function($scope) {
   function processFiles(files, range) {
     var filtered = _.filter(files, validFileName);
     return _.sortBy(
-        fillMissingSamples( calcNoteValue( filtered ), range ),
+        fillMissingSamples( calcAllNoteValues( filtered ), range ),
       'value');
   }
 
@@ -330,8 +371,8 @@ app.controller('MainCtrl', function($scope) {
       console.log('​$scope.generate -> sample', sample);
       var newSample = _.cloneDeep(cloneTarget);
       
-      // only use not value as name, e.g. F#4
-      newSample.name = sample.name.match($scope.search)[0]
+      // only use note value as name, e.g. F#4
+      newSample.name = _.values($scope.search(sample.name)).join('');
       
       // Deluge cannot render '#'. F#4 -> FX4
       newSample.name = newSample.name.replace('#', 'X');

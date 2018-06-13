@@ -36,6 +36,14 @@
         Preview XML
       </a>
       <br/>
+      <br/>
+
+      <button class="btn btn-success" ng-click="generate()" ng-if="sampleNames1">
+        <i class="glyphicon glyphicon-cd"></i>
+        &nbsp;GENERATE KIT FROM FOLDERS
+      </button>
+      <br/>( Creates sample entries for each file in the OSC1 and OSC2 folders. Overrides all individual sample settings with global
+      sample settings! )
       <!-- <span class="text-danger">CAUTION: Backup your deluge KIT file before overwriting!</span> -->
     </div>
   </div>
@@ -45,13 +53,18 @@
       <h4>OSC1 Sample Folder:</h4>
        Specify folder
        <input  class="foldername"type="string" ng-model="folderName1">
-      <input type="file" class="btn btn-info btn-file" webkitdirectory mozdirectory id="osc1files" title="OSC1 sample directory" onchange="angular.element(this).scope().loadedOSC(this, 1)"/>
+      <input type="file" class="btn btn-info btn-file" multiple id="osc1files" title="OSC1 sample directory" onchange="angular.element(this).scope().loadedOSC(this, 1)"/>
+      <br/>
+      <label for="lowerBound">Lower Bound</label>
+      <select ng-options="idx as note for (idx, note) in allNotes" name="lowerBound" ng-model="lowerBound"></select>
+      <label for="upperBound">Upper Bound</label>
+      <select ng-options="idx as note for (idx, note) in allNotes" name="upperBound" ng-model="upperBound"></select>
     </div>
     <div class="col-md-7">    
       <ul>
         <li class="file"
           ng-repeat="file in sampleNames1"
-          ng-bind-html="file.name + '&nbsp;' | highlight:search"
+          ng-bind-html="file.name + '&nbsp;' | highlight"
           id="{{'osc1_' + file.name + $index}}">
         </li>
       </ul>
@@ -69,7 +82,7 @@
       <ul>
         <li class="file"
         ng-repeat="file in sampleNames2"
-        ng-bind-html="file.name + '&nbsp;' | highlight:search"
+        ng-bind-html="file.name + '&nbsp;' | highlight"
         id="{{'osc2_' + file.name + $index}}">
       </li>
     </ul>
@@ -85,11 +98,7 @@
         </button>
       </div>
       <div class="col-sm-5">
-        <button class="btn btn-success" ng-click="generate()" ng-if="sampleNames1">
-          <i class="glyphicon glyphicon-cd"></i>
-          &nbsp;GENERATE KIT FROM FOLDERS
-        </button>
-        <br/>( Creates sample entries for each file in the OSC1 and OSC2 folders. Overrides all individual sample settings with global sample settings! )
+       
       </div>
     </div>
     <form ng-show="toggleGlobal" class="col" sf-schema="schema_osc" sf-form="['*']" sf-model="osc">
@@ -97,7 +106,7 @@
   </div>
   
   <div class="row" ng-if="model">
-    <button class="btn btn-info" ng-class="{'btn-warning': toggleDetail}" ng-click="toggleDetail = !toggleDetail">
+    <button class="btn btn-primary" ng-class="{'btn-warning': toggleDetail}" ng-click="toggleDetail = !toggleDetail">
       <i class="glyphicon glyphicon-wrench"></i>
       Individual Sample settings
     </button>

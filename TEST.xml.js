@@ -13,9 +13,9 @@ TEST_XML = `<?xml version="1.0" encoding="UTF-8"?>
 	<defaultParams>
 		<delay>
 			<rate>0x00000000</rate>
-			<feedback>0xAA000000</feedback>
+			<feedback>0x80000000</feedback>
 		</delay>
-		<reverbAmount>0xE6000000</reverbAmount>
+		<reverbAmount>0x80000000</reverbAmount>
 		<volume>0x00000000</volume>
 		<pan>0x00000000</pan>
 		<lpf>
@@ -65,7 +65,7 @@ TEST_XML = `<?xml version="1.0" encoding="UTF-8"?>
 				<reversed>0</reversed>
 				<timeStretchEnable>0</timeStretchEnable>
 				<timeStretchAmount>0</timeStretchAmount>
-				<fileName>SAMPLES/PIANO/Boesendorfer/max/A0_PU4.WAV</fileName>
+				<fileName></fileName>
 				<zone>
 					<startMilliseconds>0</startMilliseconds>
 					<endMilliseconds>24132</endMilliseconds>
@@ -252,7 +252,7 @@ TEST_XML = `<?xml version="1.0" encoding="UTF-8"?>
 				<reversed>0</reversed>
 				<timeStretchEnable>0</timeStretchEnable>
 				<timeStretchAmount>0</timeStretchAmount>
-				<fileName>SAMPLES/PIANO/Boesendorfer/max/A#0_PU4.WAV</fileName>
+				<fileName></fileName>
 				<zone>
 					<startMilliseconds>0</startMilliseconds>
 					<endMilliseconds>24132</endMilliseconds>
@@ -439,7 +439,7 @@ TEST_XML = `<?xml version="1.0" encoding="UTF-8"?>
 				<reversed>0</reversed>
 				<timeStretchEnable>0</timeStretchEnable>
 				<timeStretchAmount>0</timeStretchAmount>
-				<fileName>SAMPLES/PIANO/Boesendorfer/max/B0_PU4.WAV</fileName>
+				<fileName></fileName>
 				<zone>
 					<startMilliseconds>0</startMilliseconds>
 					<endMilliseconds>24132</endMilliseconds>
@@ -626,7 +626,7 @@ TEST_XML = `<?xml version="1.0" encoding="UTF-8"?>
 				<reversed>0</reversed>
 				<timeStretchEnable>0</timeStretchEnable>
 				<timeStretchAmount>0</timeStretchAmount>
-				<fileName>SAMPLES/PIANO/Boesendorfer/max/C1_PU4.WAV</fileName>
+				<fileName></fileName>
 				<zone>
 					<startMilliseconds>0</startMilliseconds>
 					<endMilliseconds>24132</endMilliseconds>
@@ -813,7 +813,7 @@ TEST_XML = `<?xml version="1.0" encoding="UTF-8"?>
 				<reversed>0</reversed>
 				<timeStretchEnable>0</timeStretchEnable>
 				<timeStretchAmount>0</timeStretchAmount>
-				<fileName>SAMPLES/PIANO/Boesendorfer/max/C#1_PU4.WAV</fileName>
+				<fileName></fileName>
 				<zone>
 					<startMilliseconds>0</startMilliseconds>
 					<endMilliseconds>21411</endMilliseconds>
