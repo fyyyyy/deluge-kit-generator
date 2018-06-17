@@ -15,6 +15,7 @@
 
 <body ng-controller="MainCtrl" class="container">
   <textarea class="preview" ng-show="togglePreview" class="form-control" ng-model="output" name="xml-output"></textarea>
+
   <div class="bar">
     <h2>
       <i class="glyphicon glyphicon-road"></i>
@@ -23,24 +24,27 @@
   </div>
 
   <div class="row">
+
     <div class="col-md-4">
-      <h4>KIT .xml File (optional)</h4>
+      <h4>KIT .xml File ({{filename}})</h4>
       <input class="btn btn btn-file" type="file" id="file" name="file" onchange="angular.element(this).scope().loadXmlFile(this)"
         title="{{'Loaded ' + filename}}" />
     </div>
+
     <div class="col-md-4">
-
-
-
-        <label for="fromDownrush">
-          Load from Downrush
-          <i class="glyphicon glyphicon-cloud-download"></i>
-        </label>
-
-        <select name="fromDownrush" ng-model="kitSelected">
-          <option ng-repeat="kit in kitList">{{kit}}</option>
-        </select>
-
+      <label for="fromDownrush">
+        Load Kit from Downrush
+        <i class="glyphicon glyphicon-cloud-download"></i>
+      </label>
+      
+      <select name="fromDownrush" ng-model="kitSelected">
+        <option ng-repeat="kit in kitList">{{kit}}</option>
+      </select>
+      <span ng-if="loading">
+        <i class="glyphicon glyphicon-refresh"></i>
+        {{loading}}
+      </span>
+      
       <!-- <button class="btn btn-success" ng-click="generate()" ng-if="sampleCategories1">
         <i class="glyphicon glyphicon-cd"></i>
         &nbsp;GENERATE KIT FROM FOLDERS
@@ -48,6 +52,48 @@
       <br/>( Creates sample entries for each file in the OSC1 and OSC2 folders. Overrides all individual sample settings with global
       sample settings! ) -->
       <!-- <span class="text-danger">CAUTION: Backup your deluge KIT file before overwriting!</span> -->
+    </div>
+    <div class="col-md-4">
+      <label for="fromDownrush">
+        Load Song from Downrush
+        <i class="glyphicon glyphicon-cloud-download"></i>
+      </label>
+
+      <select name="fromDownrush" ng-model="songSelected">
+        <option ng-repeat="song in songList">{{song}}</option>
+      </select>
+      <span ng-if="loading">
+        <i class="glyphicon glyphicon-refresh"></i>
+        {{loading}}
+      </span>
+      <!-- <button class="btn" ng-show="songSelected && !loading" ng-click="toggleMidi = !toggleMidi">Map MIDI</button> -->
+
+      <div ng-show="songSelected">
+
+        <label for="trackSelect">Select Track</label>
+        <select name="trackSelect" ng-model="trackSelected">
+          <option ng-repeat="track in _.castArray(song.song.tracks.track)" value="{{$index}}">{{trackKind(track)}} {{track.instrumentPresetSlot}}</option>
+        </select>
+
+        <label for="midiChSelect">Select MIDI CH</label>
+        <select ng-show="trackSelected" name="midiChSelect" ng-model="midiChSelected">
+          <option ng-repeat="ch in [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16]">{{ch}}</option>
+        </select>
+
+        <label for="startNoteSelect">Lowest Note</label>
+        <select ng-show="midiChSelected" ng-options="k as v for (k, v) in allNotes" name="startNoteSelect" ng-model="startNoteSelected">
+        </select>
+
+        <div ng-show="startNoteSelected && midiChSelected">
+          <input type="text" ng-model="songFileName">
+          <button class="btn btn-primary btn-xs" ng-click="mapMidiCh('FILE', trackSelected, midiChSelected, startNoteSelected)">Download</button>
+          <button class="btn btn-success btn-xs" ng-click="mapMidiCh('DOWNRUSH', trackSelected, midiChSelected, startNoteSelected)">
+            <i class="glyphicon glyphicon-cloud-upload"></i>
+            Save to downrush
+          </button>
+          <span style="color: red;">{{midiError}}</span>
+        </div>
+      </div>
     </div>
 
     <div class="" ng-if="model">

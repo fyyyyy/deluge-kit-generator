@@ -111,9 +111,13 @@ function generateHexMap(params) {
 }
 
 function stripFolder(path) {
-    return {
-        name: _.last(path.split('/'))
-    };
+    return path && _.last(path.split('/'))
+}
+
+function parseNumber(value) {
+    // dont parse hex numbers
+    if (value.startsWith('0x')) return value;
+    return isNaN(parseInt(value)) ? value : parseInt(value);
 }
 
 function allNotes() {
@@ -172,6 +176,17 @@ function createDownload(data, filename) {
 }
 
 
+function trackKind(track) {
+    if(!track) return '';
+	if(track['kit']) return 'KIT';
+	if(track['sound']) return 'SYNTH';
+	if(track['midiChannel']) return 'MIDI';
+	if(track['cvChannel']) return 'CV';
+	// deal with indirect refs
+	if(track['kitParams']) return 'KIT';
+	if(track['soundParams']) return 'SYNTH';
+	return 'unknown';
+}
 
 UTILS = {
     stripFolder: stripFolder,
@@ -181,7 +196,9 @@ UTILS = {
     toHex: toHex,
     toXml: toXml,
     toJson: toJson,
+    parseNumber: parseNumber,
     allNotes: allNotes,
+    trackKind: trackKind,
     mapValuesDeep: mapValuesDeep,
     createDownload: createDownload
 };

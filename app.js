@@ -65,47 +65,118 @@ app.controller('MainCtrl', function($scope) {
       lines.shift();
       var array = _.invokeMap(lines, 'split', ',')
       $scope.kitList = _.map(array, '1');
-      if(!$scope.$$phase) {
-        $scope.$apply();
-      }
+      if(!$scope.$$phase) $scope.$apply(); 
     })
   }
   loadKitList();
 
+  function loadSongList() {
+    var url = 'http://flashair/command.cgi?op=100&DIR=/SONGS&TIME=';
+    var time = new Date().valueOf();
+    fetch(url + time).then(function(res) {
+      return res.text();
+    }).then(function(csv) {
+      var lines = csv.split('/')
+      lines.shift();
+      var array = _.invokeMap(_.reverse(lines), 'split', ',')
+      $scope.songList = _.map(array, '1');
+      if(!$scope.$$phase) $scope.$apply(); 
+    })
+  }
+  loadSongList();
+
   $scope.$watch('kitSelected', function (kitName) {
+    $scope.loading = 'Loading...';
     if(kitName) {
-      loadFromDownrush('KITS/' + kitName)
-      $scope.filename = kitName;
-      $scope.kitStartNumber = $scope.getFileNumber();
+      loadFromDownrush('KITS/' + kitName).then(function(xml) {
+        $scope.loading = null;
+        parseXml(xml, kitName);
+        // createKits(1);
+      })
+    };
+  })
+  $scope.$watch('songSelected', function (songName) {
+    $scope.loading = 'Loading...';
+    if(songName) {
+      loadFromDownrush('SONGS/' + songName).then(function(xml) {
+        $scope.loading = null;
+        $scope.songFileName = songName;
+        $scope.song = UTILS.toJson(xml);
+        if(!$scope.$$phase) $scope.$apply(); 
+        console.log('​$scope.song', $scope.song);
+        // createKits(1);
+      })
     };
   })
 
   function loadFromDownrush(what) {
-    fetch('http://flashair/' + what).then(function (res) {
+    return fetch('http://flashair/' + what).then(function (res) {
       return res.text();
     }).then(function (xml) {
-      $scope.model = parseJson(xml);
-
-      $scope.files[1] = _.map($scope.model.kit.soundSources.sound, function (sound) {
-        return UTILS.stripFolder(sound.osc1.fileName);
-      });
-
-      createKits(1);
+      return xml;
     });
   }
 
-  function saveToDownrush(params) {
-    fetch('http://flashair/SONGS/SONG083B.XML', { method:'PUT', body: xml });
+  function saveToDownrush(xml, url) {
+    fetch('http://flashair/' + url, { method:'PUT', body: xml });
   }
 
-  function mapMidi(xml) {
-    var notes = xml.song.tracks.track.noteRows.noteRow
+  $scope.trackKind = UTILS.trackKind;
+
+  $scope.mapMidiCh = function mapMidiCh(where, trackIndex, ch, startNote) {
+    $scope.midiError = '';
+    console.log('​mapMidi -> track, ch, startNote', trackIndex, ch, startNote);
+    var tracks = _.castArray($scope.song.song.tracks.track);
+    var track = tracks[trackIndex];
+    if(!track) return;
+
+    if (UTILS.trackKind(track) !== 'KIT') {
+      $scope.midiError = 'Selected track is NOT a KIT!'
+      return;
+    }
+
+    var notes = track.noteRows.noteRow
     _.forEach(notes, function (n) {
+
+      if (isNaN(parseInt(n.drumIndex))) return;
+
       n.soundMidiCommand = {
-        channel: 8,
-        note: Number(n.drumIndex) + 9
+        channel: Number(ch) - 1,
+        note: Number(n.drumIndex) + Number(startNote)
       }
     });
+
+    if (where === 'FILE') UTILS.createDownload(UTILS.toXml($scope.song), $scope.songFileName);
+    if (where === 'DOWNRUSH') saveToDownrush(UTILS.toXml($scope.song), 'SONGS/' + $scope.songFileName);
+  }
+
+
+  $scope.loadXmlFile = function() {
+    var f = document.getElementById('file').files[0],
+      r = new FileReader();
+
+    if (!f) return;
+    
+    r.onloadend = function(e) {
+      parseXml(e.target.result, f.name);
+    }
+
+    r.readAsBinaryString(f);
+  }
+
+  $scope.loadedOSC = function(element, num) {
+    var files = document.getElementById('osc' + num + 'files').files;
+    var r = new FileReader();
+
+    if (!files) return;
+    console.log('​$scope.loadedOSC -> files', files);
+    
+    // extract file names
+    $scope.files[num] = _.map(files, function(file) {
+      return _.pick(file, 'name');
+    });
+
+    createKits(num);
   }
 
 
@@ -272,46 +343,11 @@ app.controller('MainCtrl', function($scope) {
 
 
   function init() {
-    $scope.filename = "KIT699.XML";
-    $scope.kitStartNumber = $scope.getFileNumber() + 1;
-    var json = parseJson(TEST_XML);
-    $scope.files[1] = _.map(json.kit.soundSources.sound, function (xml) {
-      return UTILS.stripFolder(xml.osc1.fileName);
-    });
+    parseXml(TEST_XML, "KIT123.XML");
   }
   init();
 
-  $scope.loadXmlFile = function() {
-    var f = document.getElementById('file').files[0],
-      r = new FileReader();
-
-    if (!f) return;
-
-    $scope.filename = f.name;
-    $scope.kitStartNumber = $scope.getFileNumber() + 1;
-
-    r.onloadend = function(e) {
-      var json = parseJson(e.target.result);
-      $scope.$apply();
-    }
-
-    r.readAsBinaryString(f);
-  }
-
-  $scope.loadedOSC = function(element, num) {
-    var files = document.getElementById('osc' + num + 'files').files;
-    var r = new FileReader();
-
-    if (!files) return;
-    console.log('​$scope.loadedOSC -> files', files);
-    
-    // extract file names
-    $scope.files[num] = _.map(files, function(file) {
-      return _.pick(file, 'name');
-    });
-
-    createKits(num);
-  }
+  
 
   function createKits(num) {
     console.log('​createKits -> num', num);
@@ -339,9 +375,7 @@ app.controller('MainCtrl', function($scope) {
       $scope['sampleCategories' + num][category] = filesToSamples(files);
     })
 
-    if(!$scope.$$phase) {
-      $scope.$apply();
-    }
+    if(!$scope.$$phase) $scope.$apply(); 
   }
 
 
@@ -352,9 +386,7 @@ app.controller('MainCtrl', function($scope) {
     };
     console.log('​createSingleKit -> sampleCategories', $scope['sampleCategories' + num]);
 
-    if(!$scope.$$phase) {
-      $scope.$apply();
-    }
+    if(!$scope.$$phase) $scope.$apply(); 
   }
 
 
@@ -422,15 +454,14 @@ app.controller('MainCtrl', function($scope) {
   }
 
 
-  function parseJson(json) {
-    json = UTILS.toJson(json);
+  function parseXml(xml, fileName) {
+    var json = UTILS.toJson(xml);
 
+    $scope.filename = fileName;
+    $scope.kitStartNumber = $scope.getFileNumber();
+    
     // Parse XML numbers
-    $scope.model = UTILS.mapValuesDeep(json, function (value) {
-      // dont parse hex numbers
-      if (value.startsWith('0x')) return value;
-      return isNaN(Number(value)) ? value : Number(value);
-    });
+    $scope.model = UTILS.mapValuesDeep(json, UTILS.parseNumber);
 
     $scope.osc = _.cloneDeep(json.kit.soundSources.sound[0].defaultParams);
 
@@ -438,12 +469,53 @@ app.controller('MainCtrl', function($scope) {
     _.each([1, 2], function(n) {
         $scope['folderName' + n] = UTILS.extractFolderName(json.kit.soundSources.sound[0]['osc' + n].fileName)
                                   || 'SAMPLES/PLEASE/SPECIFY/PATH';
+
+      $scope.files[n] = _.filter(_.map($scope.model.kit.soundSources.sound, function (sound) {
+        console.log('​parseXml -> sound', sound);
+
+        var osc = sound['osc' + n];
+
+        var fileName = UTILS.stripFolder(osc.fileName);
+        if(!fileName) return false;
+
+        var name = isNaN(parseInt(sound.name)) ? 
+          sound.name.toString().replace('X', '#')
+          :
+          $scope.allNotes[parseInt(sound.name)];
+
+
+        var value = _.invert($scope.allNotes)[name];
+        var transpose = Number(osc.transpose);
+        
+        console.log('​parseXml -> value', value, transpose);
+
+        var nearest = transpose && {
+          transpose: transpose,
+          name: fileName,
+          value: value
+        }
+
+        var file = {
+          name: fileName,
+          placeholder: !!nearest,
+          nearest: nearest,
+          note: name,
+          value: value
+        };
+        
+        console.log('​parseXml -> file', file);
+        
+        return file;
+      }));
       
-      var fileNames = _.uniq(_.map(json.kit.soundSources.sound, 'osc' + n + '.fileName'));
+      // var fileNames = _.uniq(_.map(json.kit.soundSources.sound, 'osc' + n + '.fileName'));
       $scope['sampleCategories' + n] = {
-        samples: filesToSamples(_.map(fileNames, UTILS.stripFolder))
+        samples: $scope.files[n]
       }
     });
+
+    if(!$scope.$$phase) $scope.$apply(); 
+
     return json;
   }
   
@@ -475,10 +547,10 @@ app.controller('MainCtrl', function($scope) {
   }, true);
   
   $scope.$watch('folderName1', function() {
-    createKits(1);
+    // createKits(1);
   });
   $scope.$watch('folderName2', function() {
-    createKits(2);
+    // createKits(2);
   });
 
 
