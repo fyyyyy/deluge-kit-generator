@@ -42,7 +42,7 @@ TEST_XML = `<?xml version="1.0" encoding="UTF-8"?>
 	</defaultParams>
 	<soundSources>
 		<sound>
-			<name>A1</name>
+			<name>D1</name>
 			<osc1>
 				<type>sample</type>
 				<transpose>0</transpose>
@@ -51,7 +51,7 @@ TEST_XML = `<?xml version="1.0" encoding="UTF-8"?>
 				<reversed>0</reversed>
 				<timeStretchEnable>0</timeStretchEnable>
 				<timeStretchAmount>0</timeStretchAmount>
-				<fileName>SAMPLES/PLEASE/SPECIFY/PATH/A1_EXAMPLE.WAV</fileName>
+				<fileName>SAMPLES/PLEASE/SPECIFY/PATH/D1_EXAMPLE.WAV</fileName>
 				<zone>
 					<startMilliseconds>0</startMilliseconds>
 					<endMilliseconds>12931</endMilliseconds>
@@ -404,7 +404,7 @@ TEST_XML = `<?xml version="1.0" encoding="UTF-8"?>
 			</modKnobs>
 		</sound>
 		<sound>
-			<name>B1</name>
+			<name>D2</name>
 			<osc1>
 				<type>sample</type>
 				<transpose>0</transpose>
@@ -413,7 +413,7 @@ TEST_XML = `<?xml version="1.0" encoding="UTF-8"?>
 				<reversed>0</reversed>
 				<timeStretchEnable>0</timeStretchEnable>
 				<timeStretchAmount>0</timeStretchAmount>
-				<fileName>SAMPLES/PLEASE/SPECIFY/PATH/B1_EXAMPLE.WAV</fileName>
+				<fileName>SAMPLES/PLEASE/SPECIFY/PATH/D2_EXAMPLE.WAV</fileName>
 				<zone>
 					<startMilliseconds>0</startMilliseconds>
 					<endMilliseconds>12931</endMilliseconds>
@@ -776,7 +776,7 @@ TEST_XML = `<?xml version="1.0" encoding="UTF-8"?>
 			</modKnobs>
 		</sound>
 		<sound>
-			<name>C#1</name>
+			<name>E#1</name>
 			<osc1>
 				<type>sample</type>
 				<transpose>0</transpose>
@@ -785,7 +785,7 @@ TEST_XML = `<?xml version="1.0" encoding="UTF-8"?>
 				<reversed>0</reversed>
 				<timeStretchEnable>0</timeStretchEnable>
 				<timeStretchAmount>0</timeStretchAmount>
-				<fileName>SAMPLES/PLEASE/SPECIFY/PATH/C#1_EXAMPLE.WAV</fileName>
+				<fileName>SAMPLES/PLEASE/SPECIFY/PATH/E#1_EXAMPLE.WAV</fileName>
 				<zone>
 					<startMilliseconds>0</startMilliseconds>
 					<endMilliseconds>15102</endMilliseconds>
