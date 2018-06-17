@@ -62,7 +62,7 @@ angular.module('schemaForm').config(['schemaFormProvider', 'schemaFormDecorators
   };
 
   schemaFormProvider.defaults.hex = [hex];
-  decoratorsProvider.addMapping('bootstrapDecorator', 'hex', 'directives/decorators/bootstrap/hex.html');
+  decoratorsProvider.addMapping('bootstrapDecorator', 'hex', 'directives/decorators/bootstrap/default.html');
 
 
 

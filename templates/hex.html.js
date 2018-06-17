@@ -63,8 +63,8 @@ var HEX_TEMPLATE = (`
         "form.readonly" sf-changed="form" class="form-control {{form.fieldHtmlClass}}" schema-validate="form" ng-options=
         "item.value as item.name group by item.group for item in form.titleMap" name="{{form.key.slice(-1)[0]}}">
         </select>
-    <div class="hex">{{${hexMap}[$$value$$] || $$value$$ }}</div>
-    
+    <div class="hex">{{$$value$$ | hex50 }}</div>
+
     <div class="help-block" sf-message="form.description"></div>
 </div>
 `)

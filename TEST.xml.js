@@ -42,7 +42,7 @@ TEST_XML = `<?xml version="1.0" encoding="UTF-8"?>
 	</defaultParams>
 	<soundSources>
 		<sound>
-			<name>a0  </name>
+			<name>A1</name>
 			<osc1>
 				<type>sample</type>
 				<transpose>0</transpose>
@@ -51,7 +51,7 @@ TEST_XML = `<?xml version="1.0" encoding="UTF-8"?>
 				<reversed>0</reversed>
 				<timeStretchEnable>0</timeStretchEnable>
 				<timeStretchAmount>0</timeStretchAmount>
-				<fileName>SAMPLES/PLEASE/SPECIFY/PATH/A0_PU1.WAV</fileName>
+				<fileName>SAMPLES/PLEASE/SPECIFY/PATH/A1_EXAMPLE.WAV</fileName>
 				<zone>
 					<startMilliseconds>0</startMilliseconds>
 					<endMilliseconds>12931</endMilliseconds>
@@ -102,14 +102,14 @@ TEST_XML = `<?xml version="1.0" encoding="UTF-8"?>
 				<arpeggiatorGate>0x00000000</arpeggiatorGate>
 				<portamento>0x80000000</portamento>
 				<compressorShape>0xDC28F5B2</compressorShape>
-				<oscAVolume>0x7FFFFFD2</oscAVolume>
+				<oscAVolume>0x4CCCCCA8</oscAVolume>
 				<oscAPulseWidth>0x00000000</oscAPulseWidth>
-				<oscBVolume>0x7FFFFFD2</oscBVolume>
+				<oscBVolume>0x80000000</oscBVolume>
 				<oscBPulseWidth>0x00000000</oscBPulseWidth>
 				<noiseVolume>0x80000000</noiseVolume>
-				<volume>0x4CCCCCA8</volume>
+				<volume>0x1EB851CF</volume>
 				<pan>0x00000000</pan>
-				<lpfFrequency>0x4CCCCCA8</lpfFrequency>
+				<lpfFrequency>0x23D70A20</lpfFrequency>
 				<lpfResonance>0x80000000</lpfResonance>
 				<hpfFrequency>0x80000000</hpfFrequency>
 				<hpfResonance>0x80000000</hpfResonance>
@@ -140,26 +140,16 @@ TEST_XML = `<?xml version="1.0" encoding="UTF-8"?>
 				<reverbAmount>0x80000000</reverbAmount>
 				<arpeggiatorRate>0x00000000</arpeggiatorRate>
 				<patchCables>
-					<patchCable>
-						<source>velocity</source>
-						<destination>volume</destination>
-						<amount>0x3FFFFFE8</amount>
-					</patchCable>
-					<patchCable>
-						<source>velocity</source>
-						<destination>lpfFrequency</destination>
-						<amount>0x26666658</amount>
-					</patchCable>
-					<patchCable>
-						<source>velocity</source>
-						<destination>oscBVolume</destination>
-						<amount>0x3FFFFFE8</amount>
-					</patchCable>
-					<patchCable>
-						<source>velocity</source>
-						<destination>oscAVolume</destination>
-						<amount>0xC0000018</amount>
-					</patchCable>
+				<patchCable>
+					<source>velocity</source>
+					<destination>volume</destination>
+					<amount>0x328FCD70</amount>
+				</patchCable>
+				<patchCable>
+					<source>velocity</source>
+					<destination>lpfFrequency</destination>
+					<amount>0x26666658</amount>
+				</patchCable>
 				</patchCables>
 				<stutterRate>0x00000000</stutterRate>
 				<sampleRateReduction>0x80000000</sampleRateReduction>
@@ -173,8 +163,7 @@ TEST_XML = `<?xml version="1.0" encoding="UTF-8"?>
 				<modFXOffset>0x00000000</modFXOffset>
 				<modFXFeedback>0x00000000</modFXFeedback>
 			</defaultParams>
-			<midiKnobs>
-			</midiKnobs>
+			<midiKnobs></midiKnobs>
 			<modKnobs>
 				<modKnob>
 					<controlsParam>pan</controlsParam>
@@ -229,7 +218,7 @@ TEST_XML = `<?xml version="1.0" encoding="UTF-8"?>
 			</modKnobs>
 		</sound>
 		<sound>
-			<name>a0 s</name>
+			<name>A#1</name>
 			<osc1>
 				<type>sample</type>
 				<transpose>0</transpose>
@@ -238,7 +227,7 @@ TEST_XML = `<?xml version="1.0" encoding="UTF-8"?>
 				<reversed>0</reversed>
 				<timeStretchEnable>0</timeStretchEnable>
 				<timeStretchAmount>0</timeStretchAmount>
-				<fileName>SAMPLES/PLEASE/SPECIFY/PATH/A#0_PU1.WAV</fileName>
+				<fileName>SAMPLES/PLEASE/SPECIFY/PATH/A#1_EXAMPLE.WAV</fileName>
 				<zone>
 					<startMilliseconds>0</startMilliseconds>
 					<endMilliseconds>12931</endMilliseconds>
@@ -360,8 +349,7 @@ TEST_XML = `<?xml version="1.0" encoding="UTF-8"?>
 				<modFXOffset>0x00000000</modFXOffset>
 				<modFXFeedback>0x00000000</modFXFeedback>
 			</defaultParams>
-			<midiKnobs>
-			</midiKnobs>
+			<midiKnobs></midiKnobs>
 			<modKnobs>
 				<modKnob>
 					<controlsParam>pan</controlsParam>
@@ -416,7 +404,7 @@ TEST_XML = `<?xml version="1.0" encoding="UTF-8"?>
 			</modKnobs>
 		</sound>
 		<sound>
-			<name>b0  </name>
+			<name>B1</name>
 			<osc1>
 				<type>sample</type>
 				<transpose>0</transpose>
@@ -425,7 +413,7 @@ TEST_XML = `<?xml version="1.0" encoding="UTF-8"?>
 				<reversed>0</reversed>
 				<timeStretchEnable>0</timeStretchEnable>
 				<timeStretchAmount>0</timeStretchAmount>
-				<fileName>SAMPLES/PLEASE/SPECIFY/PATH/B0_PU1.WAV</fileName>
+				<fileName>SAMPLES/PLEASE/SPECIFY/PATH/B1_EXAMPLE.WAV</fileName>
 				<zone>
 					<startMilliseconds>0</startMilliseconds>
 					<endMilliseconds>12931</endMilliseconds>
@@ -547,8 +535,7 @@ TEST_XML = `<?xml version="1.0" encoding="UTF-8"?>
 				<modFXOffset>0x00000000</modFXOffset>
 				<modFXFeedback>0x00000000</modFXFeedback>
 			</defaultParams>
-			<midiKnobs>
-			</midiKnobs>
+			<midiKnobs></midiKnobs>
 			<modKnobs>
 				<modKnob>
 					<controlsParam>pan</controlsParam>
@@ -603,7 +590,7 @@ TEST_XML = `<?xml version="1.0" encoding="UTF-8"?>
 			</modKnobs>
 		</sound>
 		<sound>
-			<name>c1  </name>
+			<name>C1</name>
 			<osc1>
 				<type>sample</type>
 				<transpose>0</transpose>
@@ -612,7 +599,7 @@ TEST_XML = `<?xml version="1.0" encoding="UTF-8"?>
 				<reversed>0</reversed>
 				<timeStretchEnable>0</timeStretchEnable>
 				<timeStretchAmount>0</timeStretchAmount>
-				<fileName>SAMPLES/PLEASE/SPECIFY/PATH/C1_PU1.WAV</fileName>
+				<fileName>SAMPLES/PLEASE/SPECIFY/PATH/C1_EXAMPLE.WAV</fileName>
 				<zone>
 					<startMilliseconds>0</startMilliseconds>
 					<endMilliseconds>12931</endMilliseconds>
@@ -734,8 +721,7 @@ TEST_XML = `<?xml version="1.0" encoding="UTF-8"?>
 				<modFXOffset>0x00000000</modFXOffset>
 				<modFXFeedback>0x00000000</modFXFeedback>
 			</defaultParams>
-			<midiKnobs>
-			</midiKnobs>
+			<midiKnobs></midiKnobs>
 			<modKnobs>
 				<modKnob>
 					<controlsParam>pan</controlsParam>
@@ -790,7 +776,7 @@ TEST_XML = `<?xml version="1.0" encoding="UTF-8"?>
 			</modKnobs>
 		</sound>
 		<sound>
-			<name>c1 s</name>
+			<name>C#1</name>
 			<osc1>
 				<type>sample</type>
 				<transpose>0</transpose>
@@ -799,7 +785,7 @@ TEST_XML = `<?xml version="1.0" encoding="UTF-8"?>
 				<reversed>0</reversed>
 				<timeStretchEnable>0</timeStretchEnable>
 				<timeStretchAmount>0</timeStretchAmount>
-				<fileName>SAMPLES/PLEASE/SPECIFY/PATH/C#1_PU1.WAV</fileName>
+				<fileName>SAMPLES/PLEASE/SPECIFY/PATH/C#1_EXAMPLE.WAV</fileName>
 				<zone>
 					<startMilliseconds>0</startMilliseconds>
 					<endMilliseconds>15102</endMilliseconds>
@@ -921,8 +907,7 @@ TEST_XML = `<?xml version="1.0" encoding="UTF-8"?>
 				<modFXOffset>0x00000000</modFXOffset>
 				<modFXFeedback>0x00000000</modFXFeedback>
 			</defaultParams>
-			<midiKnobs>
-			</midiKnobs>
+			<midiKnobs></midiKnobs>
 			<modKnobs>
 				<modKnob>
 					<controlsParam>pan</controlsParam>
@@ -977,5 +962,5 @@ TEST_XML = `<?xml version="1.0" encoding="UTF-8"?>
 			</modKnobs>
 		</sound>
 	</soundSources>
-	<selectedDrumIndex>39</selectedDrumIndex>
+	<selectedDrumIndex>0</selectedDrumIndex>
 </kit>`

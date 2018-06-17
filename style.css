@@ -24,18 +24,53 @@ textarea.preview {
   min-width: 100%;
 }
 
+
+tr {
+  border-bottom: 1px dashed #ccc;
+}
+
+table td {
+  padding: 0.2em 0.5em;
+}
+
+table th {
+  padding-right: 0.3em;
+  font-weight: normal;
+}
+
+td.plus {
+  text-align: right;
+  color: green;
+}
+td.plus::before {
+  content: '+'
+}
+td.minus {
+  text-align: right;
+  color: red;
+}
+
+
+tr.missing {
+  color: #999;
+  background-color: #f4f4f4;
+}
+
+tr.file {
+  margin-left: 1em;
+  list-style: none;
+  /* display: inline-block; */
+  font-size: 70%;
+}
+
 .hex {
+  font-family: monospace;
   margin-left: 130px;
   margin-top: -25px;
   position: absolute;
+  color: #aaa;
 }
 
-li.file {
-  margin-left: 1em;
-  list-style: none;
-  display: inline-block;
-  font-size: 70%;
-}
 
 form {
   background-color: #eee;
@@ -52,6 +87,7 @@ form legend {
 .has-success label span {
   color: #333;
 }
+
 
 .form-group label.control-label {
   color: #333;
@@ -97,18 +133,21 @@ form .has-success .help-block {
   /* min-width: 40%; */
   flex: 1;
 }
-
+.toggle {
+  padding: 0.3em;
+  cursor: row-resize;
+}
 form fieldset {
   /* clear: both; */
 }
 
 span.highlighted {
-  color: #5bc0de;
-  font-weight: bold;
+  color: #5bb0ce;
+  /* font-weight: bold; */
 }
 
 input.foldername {
-  width: 50%;
+  width: 100%;
 }
 
 form fieldset input[id="fileName"] {
