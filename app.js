@@ -1,7 +1,7 @@
 var app = angular.module('plunker', ['ngSanitize', 'schemaForm', 'ui.knob']);
 
 var patterns = {
-  'note:sign:octave': /(A|B|C|D|E|F|G)(#|b)?(\d)/,
+  'note:sign:octave': /(A|B|C|D|E|F|G)(#|b)?(\d)/i,
   'value:value:value': /(0\d\d)|(1\d\d)|(\d\d\.)/
 }
 
@@ -32,7 +32,7 @@ app.filter('highlight', function ($sce) {
 
 app.controller('MainCtrl', function($scope) {
 
-  $scope.allNotes = UTILS.allNotes();
+  $scope.allNotes = UTILS.allNotes;
   $scope.kitList = [];
 
   $scope.search = function (fileName) {
@@ -228,6 +228,7 @@ app.controller('MainCtrl', function($scope) {
     return _.map(files, function(file) {
       // regex matches
       var matches = $scope.search(file.name);
+      console.log('​calcAllNoteValues ->', matches, file.name);
       
       if (!matches) {
         console.error('could not identify note in name', matches, file);
@@ -238,7 +239,7 @@ app.controller('MainCtrl', function($scope) {
       
       // Calc note value unless known
       file.value = isNaN(value) ? calcNoteValue(matches.note, matches.sign, matches.octave) : value;
-      file.note = $scope.allNotes[file.value];
+      file.note = UTILS.findNote(file.value);
             
       // This is not a placeholder
       file.placeholder = false;
@@ -252,14 +253,14 @@ app.controller('MainCtrl', function($scope) {
     var noteValue = { 'C': 0, 'D': 2, 'E': 4, 'F': 5, 'G': 7, 'A': 9, 'B': 11 };
 
     // Note Name (C, D, E...)
-    var value = noteValue[name];
+    var value = noteValue[_.toUpper(name)];
 
     // Octave (0, 1, 2, 3...)
     value += (Number(octave * 12)) + 12;
 
     // Sharp or Flat (#, b)
     var sign = sharpOrFlat;
-    if (sign) value += signMap[sign];
+    if (sign) value += signMap[_.toLower(sign)];
     return value;
   }
 
@@ -280,7 +281,7 @@ app.controller('MainCtrl', function($scope) {
 
       if (!exists) {
         var octave = _.floor(value / 12) - 1;
-        var noteName = $scope.allNotes[value];
+        var noteName = UTILS.findNote(value);
         var nearest = findNearestSample(files, value);
 
         if (!nearest) {
@@ -319,11 +320,9 @@ app.controller('MainCtrl', function($scope) {
       });
 
       var clone =  _.cloneDeep(nearest);
-      _.set(clone, 'note', $scope.allNotes[value]);
-
+      _.set(clone, 'note', UTILS.findNote(value));
       return clone;
     }
-    
     return files;
   }
 
@@ -355,19 +354,28 @@ app.controller('MainCtrl', function($scope) {
     $scope.multi ? createMultiKits(num) : createSingleKit(num);
   }
 
+  function stripNotesFromFileName(name) {
+    // check for multi match
+    _.times(5, function() {
+      var match = $scope.search(name);
+      name = match && name.split(match.all).join('') || name;
+    });
+    return name;
+  }
+
   function createMultiKits(num) {
     var categories = {};
 
     // clear
     $scope['sampleCategories' + num] = {};
 
-    _.forEach($scope.files[num], function (f) {
-      var m = $scope.search(f.name);
-      var category = m && f.name.split(m.all).join('');
+    _.forEach($scope.files[num], function (file) {
+      var category = stripNotesFromFileName(file.name);
+
       if (category) {
         category = category.replace(/.wav/gi, '');
         categories[category] = categories[category] || [];
-        categories[category].push(f);
+        categories[category].push(file);
       }
     });
 
@@ -481,10 +489,10 @@ app.controller('MainCtrl', function($scope) {
         var name = isNaN(parseInt(sound.name)) ? 
           sound.name.toString().replace('X', '#')
           :
-          $scope.allNotes[parseInt(sound.name)];
+          UTILS.findNote(sound.name);
 
 
-        var value = _.invert($scope.allNotes)[name];
+        var value = UTILS.findValue(name);
         var transpose = Number(osc.transpose);
         
         console.log('​parseXml -> value', value, transpose);

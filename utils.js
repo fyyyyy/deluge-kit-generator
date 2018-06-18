@@ -120,7 +120,7 @@ function parseNumber(value) {
     return isNaN(parseInt(value)) ? value : parseInt(value);
 }
 
-function allNotes() {
+function generateNotes() {
     var noteMap = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B'];
     var octaves = _.range(-1, 9);
     var allNotes = {}
@@ -130,6 +130,14 @@ function allNotes() {
         });
     });
     return allNotes;
+}
+
+function findNote(val) {
+    return UTILS.allNotes[val];
+}
+function findValue(note) {
+    var found = isNaN(parseInt(note)) ? _.toUpper(note) : parseInt(note);
+    return UTILS.allValues[found];
 }
 
 
@@ -197,7 +205,10 @@ UTILS = {
     toXml: toXml,
     toJson: toJson,
     parseNumber: parseNumber,
-    allNotes: allNotes,
+    allNotes: generateNotes(),
+    allValues: _.invert(generateNotes()),
+    findNote: findNote,
+    findValue: findValue,
     trackKind: trackKind,
     mapValuesDeep: mapValuesDeep,
     createDownload: createDownload

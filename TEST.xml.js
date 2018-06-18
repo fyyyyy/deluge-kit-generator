@@ -102,7 +102,7 @@ TEST_XML = `<?xml version="1.0" encoding="UTF-8"?>
 				<arpeggiatorGate>0x00000000</arpeggiatorGate>
 				<portamento>0x80000000</portamento>
 				<compressorShape>0xDC28F5B2</compressorShape>
-				<oscAVolume>0x4CCCCCA8</oscAVolume>
+				<oscAVolume>0x33333313</oscAVolume>
 				<oscAPulseWidth>0x00000000</oscAPulseWidth>
 				<oscBVolume>0x80000000</oscBVolume>
 				<oscBPulseWidth>0x00000000</oscBPulseWidth>
@@ -280,7 +280,7 @@ TEST_XML = `<?xml version="1.0" encoding="UTF-8"?>
 				<compressorShape>0xDC28F5B2</compressorShape>
 				<oscAVolume>0x7FFFFFFF</oscAVolume>
 				<oscAPulseWidth>0x00000000</oscAPulseWidth>
-				<oscBVolume>0xF0A3D6F6</oscBVolume>
+				<oscBVolume>0x80000000</oscBVolume>
 				<oscBPulseWidth>0x00000000</oscBPulseWidth>
 				<noiseVolume>0x80000000</noiseVolume>
 				<volume>0x4CCCCCA8</volume>
@@ -466,7 +466,7 @@ TEST_XML = `<?xml version="1.0" encoding="UTF-8"?>
 				<compressorShape>0xDC28F5B2</compressorShape>
 				<oscAVolume>0x7FFFFFFF</oscAVolume>
 				<oscAPulseWidth>0x00000000</oscAPulseWidth>
-				<oscBVolume>0xF0A3D6F6</oscBVolume>
+				<oscBVolume>0x80000000</oscBVolume>
 				<oscBPulseWidth>0x00000000</oscBPulseWidth>
 				<noiseVolume>0x80000000</noiseVolume>
 				<volume>0x4CCCCCA8</volume>
@@ -652,7 +652,7 @@ TEST_XML = `<?xml version="1.0" encoding="UTF-8"?>
 				<compressorShape>0xDC28F5B2</compressorShape>
 				<oscAVolume>0x7FFFFFFF</oscAVolume>
 				<oscAPulseWidth>0x00000000</oscAPulseWidth>
-				<oscBVolume>0xF0A3D6F6</oscBVolume>
+				<oscBVolume>0x80000000</oscBVolume>
 				<oscBPulseWidth>0x00000000</oscBPulseWidth>
 				<noiseVolume>0x80000000</noiseVolume>
 				<volume>0x4CCCCCA8</volume>
@@ -838,7 +838,7 @@ TEST_XML = `<?xml version="1.0" encoding="UTF-8"?>
 				<compressorShape>0xDC28F5B2</compressorShape>
 				<oscAVolume>0x7FFFFFFF</oscAVolume>
 				<oscAPulseWidth>0x00000000</oscAPulseWidth>
-				<oscBVolume>0xF5C28F47</oscBVolume>
+				<oscBVolume>0x80000000</oscBVolume>
 				<oscBPulseWidth>0x00000000</oscBPulseWidth>
 				<noiseVolume>0x80000000</noiseVolume>
 				<volume>0x4CCCCCA8</volume>
