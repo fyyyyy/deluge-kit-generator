@@ -138,12 +138,12 @@
 
   <div class="row">
     <div class="col-md-5">
-      <h4>OSC1 Samples:</h4>
+      <h3>OSC1</h3>
       <div class="form-group">
         <input class="foldername" type="string" ng-model="folderName1" />
       </div>
       <div class="form-group">
-        <input type="file" class="btn btn-file" multiple id="osc1files" title="OSC1 sample directory" onchange="angular.element(this).scope().loadedOSC(this, 1)"
+        <input type="file" multiple class="btn btn-file" id="osc1files" title="OSC1 sample directory" onchange="angular.element(this).scope().loadedOSC(this, 1)"
         />
         <label>
           <input type="checkbox" ng-model="multi" ng-checked="multi">
@@ -213,17 +213,44 @@
 
   <div class="row">
     <div class="col-md-5">
-      <h4>OSC2 Samples:</h4>
+      <h3>OSC2</h3>
       <input class="foldername" type="string" ng-model="folderName2">
-      <input type="file" class="btn btn-file" webkitdirectory mozdirectory id="osc2files" title="OSC2 sample directory" onchange="angular.element(this).scope().loadedOSC(this, 2)"
+      <input type="file" multiple class="btn btn-file" id="osc2files" title="OSC2 sample directory" onchange="angular.element(this).scope().loadedOSC(this, 2)"
       />
     </div>
-    <div class="col-md-5">
+    <div class="col-md-7">
       <ul ng-repeat="(category, sampleNames) in sampleCategories2">
-        <h4>KIT{{getFileNumber() + $index + 1}}: {{category}}</h4>
-        <li class="file" ng-repeat="file in sampleNames" ng-bind-html="file.note + ' ' + file.name | highlight" id="{{'osc2_' + file.name + $index}}">
-        </li>
-      </ul>
+          <h4>{{category}} </h4>
+          <button class="btn btn-xs" ng-init="togglSampleList = true" ng-click="togglSampleList = !togglSampleList">
+            <a>
+             <i class="glyphicon glyphicon-list-alt"></i>
+              {{togglSampleList ? 'Hide' : 'Show'}} {{_.reject(sampleNames, 'nearest').length}} samples
+              and {{_.filter(sampleNames, 'nearest').length}} transposed samples
+  
+                <i ng-if="!togglSampleList" class="glyphicon glyphicon-chevron-right"></i>
+                <i ng-if="togglSampleList" class="glyphicon glyphicon-chevron-down"></i>
+             </a>
+          </button>
+          <div ng-if="togglSampleList">
+            <table>
+            <th>Value</th>
+            <th>Note</th>
+            <th>Sample</th>
+            <th>Transpose</th>
+            <tr class="file"
+              ng-repeat="file in sampleNames"
+              ng-class="{missing: file.nearest}"
+              id="{{'osc2_' + file.name + $index}}">
+              <td ng-bind-html="file.value"></td>
+              <td ng-bind-html="file.note"></td>
+              <td ng-bind-html="file.name | highlight"></td>
+              <td ng-class="file.nearest.transpose > 0 ? 'plus' : 'minus'">
+                {{ file.nearest.transpose }}
+              </td>
+            </tr>
+            </table>
+          </div>
+        </ul>
     </div>
   </div>
 

@@ -125,7 +125,6 @@ app.controller('MainCtrl', function($scope) {
 
   $scope.mapMidiCh = function mapMidiCh(where, trackIndex, ch, startNote) {
     $scope.midiError = '';
-    console.log('​mapMidi -> track, ch, startNote', trackIndex, ch, startNote);
     var tracks = _.castArray($scope.song.song.tracks.track);
     var track = tracks[trackIndex];
     if(!track) return;
@@ -225,20 +224,20 @@ app.controller('MainCtrl', function($scope) {
 
 
   function calcAllNoteValues(files) {
+    var lastValue = 0;
     return _.map(files, function(file) {
       // regex matches
       var matches = $scope.search(file.name);
-      console.log('​calcAllNoteValues ->', matches, file.name);
       
       if (!matches) {
-        console.error('could not identify note in name', matches, file);
-        return;
+        console.warn('could not identify note in name', matches, file);
       };
       
       var value = Number(matches.value);
-      
       // Calc note value unless known
       file.value = isNaN(value) ? calcNoteValue(matches.note, matches.sign, matches.octave) : value;
+      value = isNaN(value) ? ++lastValue : value;
+
       file.note = UTILS.findNote(file.value);
             
       // This is not a placeholder
@@ -280,7 +279,6 @@ app.controller('MainCtrl', function($scope) {
       var exists = _.find(files, { value: value });
 
       if (!exists) {
-        var octave = _.floor(value / 12) - 1;
         var noteName = UTILS.findNote(value);
         var nearest = findNearestSample(files, value);
 
@@ -392,13 +390,13 @@ app.controller('MainCtrl', function($scope) {
     $scope['sampleCategories' + num] = {
       samples: filesToSamples($scope.files[num])
     };
-    console.log('​createSingleKit -> sampleCategories', $scope['sampleCategories' + num]);
+    console.log('​createSingleKit ->', num, $scope['sampleCategories' + num]);
 
     if(!$scope.$$phase) $scope.$apply(); 
   }
 
 
-  $scope.generate = function(category) {
+  $scope.generateXml = function(category) {
     if (category) {
       var sampleNames = $scope.sampleCategories1[category];
   
@@ -406,50 +404,47 @@ app.controller('MainCtrl', function($scope) {
       var cloneTarget = _.cloneDeep($scope.model.kit.soundSources.sound[0]);
       cloneTarget.defaultParams = _.cloneDeep($scope.osc);
   
-      $scope.model.kit.soundSources.sound = _.map(sampleNames, createSample.bind(cloneTarget));
+      $scope.model.kit.soundSources.sound = _.map(sampleNames, createSoundXml.bind(cloneTarget, category));
   
       $scope.output = UTILS.toXml($scope.model);
       return;
     }
   }
 
-  function createSample(sample) {
-    var cloneTarget = this;
-    var newSample = _.cloneDeep(cloneTarget);
-
-    var match = $scope.search(sample.name);
+  function createSoundXml(category, sample) {
+    var newSound = _.cloneDeep(this);
 
     // only use note value as name, e.g. F#4
-    newSample.name = sample.note;
+    newSound.name = sample.note;
     
-    if(!newSample.name) console.warn('no name found -> ', sample);
+    if(!newSound.name) console.warn('no name found -> ', sample);
     
     // Deluge cannot render '#'. F#4 -> FX4
-    newSample.name = newSample.name.replace('#', 'X');
+    newSound.name = newSound.name.replace('#', 'X');
 
     // set OSC1 fileName
-    newSample.osc1.fileName = $scope.folderName1 + '/' + sample.name;
+    newSound.osc1.fileName = $scope.folderName1 + '/' + sample.name;
     // set transpose to 0
-    newSample.osc1.transpose = 0;
+    newSound.osc1.transpose = 0;
 
-    transposeNearest(sample.nearest, newSample.osc1, $scope.folderName1);
+    transposeNearest(sample.nearest, newSound.osc1, $scope.folderName1);
 
 
     // Find sample with same note for OSC2
-    var matchingSampleOsc2 = _.find($scope.sampleCategories2, { value: sample.value });
+    var matchingSampleOsc2 = _.find($scope.sampleCategories2[category], { value: sample.value });
 
     if (matchingSampleOsc2) {
       // set OSC2 fileName
-      newSample.osc2.fileName = $scope.folderName2 + '/' + matchingSampleOsc2.name
-      transposeNearest(matchingSampleOsc2.nearest, newSample.osc2, $scope.folderName2);
+      newSound.osc2.fileName = $scope.folderName2 + '/' + matchingSampleOsc2.name
+      transposeNearest(matchingSampleOsc2.nearest, newSound.osc2, $scope.folderName2);
     } else {
       // no sample found for the note, mute OSC2
-      newSample.defaultParams.oscBVolume = '0x80000000';
-      newSample.osc2.fileName = '';
-      // console.warn('No matching sample', newSample.name, 'for OSC2 found');
+      newSound.defaultParams.oscBVolume = '0x80000000';
+      newSound.osc2.fileName = '';
+      console.warn('No matching sample', newSound.name, '(', sample.value, ') for OSC2 found');
     }
 
-    return newSample;
+    return newSound;
   }
 
   function transposeNearest(nearest, osc, folderName) {
@@ -479,7 +474,7 @@ app.controller('MainCtrl', function($scope) {
                                   || 'SAMPLES/PLEASE/SPECIFY/PATH';
 
       $scope.files[n] = _.filter(_.map($scope.model.kit.soundSources.sound, function (sound) {
-        console.log('​parseXml -> sound', sound);
+        // console.log('​parseXml -> sound', sound);
 
         var osc = sound['osc' + n];
 
@@ -495,8 +490,6 @@ app.controller('MainCtrl', function($scope) {
         var value = UTILS.findValue(name);
         var transpose = Number(osc.transpose);
         
-        console.log('​parseXml -> value', value, transpose);
-
         var nearest = transpose && {
           transpose: transpose,
           name: fileName,
@@ -510,8 +503,6 @@ app.controller('MainCtrl', function($scope) {
           note: name,
           value: value
         };
-        
-        console.log('​parseXml -> file', file);
         
         return file;
       }));
@@ -536,7 +527,7 @@ app.controller('MainCtrl', function($scope) {
 
   $scope.saveFile = function(category, i) {
     
-    $scope.generate(category);
+    $scope.generateXml(category);
     
     // pick next number for filename
     var filename = nextFilename(i || 0);
@@ -552,6 +543,7 @@ app.controller('MainCtrl', function($scope) {
 
   $scope.$watch('bounds', function() {
     createKits(1);
+    createKits(2);
   }, true);
   
   $scope.$watch('folderName1', function() {
