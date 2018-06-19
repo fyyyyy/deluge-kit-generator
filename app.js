@@ -33,7 +33,7 @@ app.filter('highlight', function ($sce) {
 app.controller('MainCtrl', function($scope) {
 
   $scope.allNotes = UTILS.allNotes;
-  $scope.kitList = [];
+  $scope.kitList = null;
 
   $scope.search = function (fileName) {
     var results = _.map(patterns, function (regex, groups) {
@@ -55,9 +55,11 @@ app.controller('MainCtrl', function($scope) {
   };
   window.nsearch = $scope.search;
 
-  function loadKitList() {
+  $scope.loadKitList = function loadKitList() {
     var url = 'http://flashair/command.cgi?op=100&DIR=/KITS&TIME=';
     var time = new Date().valueOf();
+    $scope.loadKitListError = false;
+
     fetch(url + time).then(function(res) {
       return res.text();
     }).then(function(csv) {
@@ -66,13 +68,19 @@ app.controller('MainCtrl', function($scope) {
       var array = _.invokeMap(lines, 'split', ',')
       $scope.kitList = _.map(array, '1');
       if(!$scope.$$phase) $scope.$apply(); 
+    }, function (e) {
+      console.warn('​loadKitList -> FAILED ', e);
+      $scope.loadKitListError = true;
+      if(!$scope.$$phase) $scope.$apply(); 
     })
   }
-  loadKitList();
+  $scope.loadKitList();
 
-  function loadSongList() {
+  $scope.loadSongList = function loadSongList() {
     var url = 'http://flashair/command.cgi?op=100&DIR=/SONGS&TIME=';
     var time = new Date().valueOf();
+    $scope.loadSongListError = false;
+
     fetch(url + time).then(function(res) {
       return res.text();
     }).then(function(csv) {
@@ -81,9 +89,13 @@ app.controller('MainCtrl', function($scope) {
       var array = _.invokeMap(_.reverse(lines), 'split', ',')
       $scope.songList = _.map(array, '1');
       if(!$scope.$$phase) $scope.$apply(); 
+    }, function (e) {
+        console.warn('loadSongList -> FAILED ', e);
+        $scope.loadSongListError = true;
+        if(!$scope.$$phase) $scope.$apply(); 
     })
   }
-  loadSongList();
+  $scope.loadSongList();
 
   $scope.$watch('kitSelected', function (kitName) {
     $scope.loading = 'Loading...';

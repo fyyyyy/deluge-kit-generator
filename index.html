@@ -36,8 +36,10 @@
         Load Kit from Downrush
         <i class="glyphicon glyphicon-cloud-download"></i>
       </label>
+
+      <button class="btn btn-warning btn-xs" ng-show="loadKitListError" ng-click="loadKitList()">Retry</button>
       
-      <select name="fromDownrush" ng-model="kitSelected">
+      <select ng-show="kitList" name="fromDownrush" ng-model="kitSelected">
         <option ng-repeat="kit in kitList">{{kit}}</option>
       </select>
       <span ng-if="loading">
@@ -58,8 +60,10 @@
         Load Song from Downrush
         <i class="glyphicon glyphicon-cloud-download"></i>
       </label>
+      
+      <button class="btn btn-warning btn-xs" ng-show="loadSongListError" ng-click="loadSongList()">Retry</button>
 
-      <select name="fromDownrush" ng-model="songSelected">
+      <select ng-show="songList" name="fromDownrush" ng-model="songSelected">
         <option ng-repeat="song in songList">{{song}}</option>
       </select>
       <span ng-if="loading">
