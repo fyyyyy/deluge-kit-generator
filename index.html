@@ -22,11 +22,64 @@
       DELUGE KIT GENERATOR 1.1
     </h2>by frankyyyy ät live.com
   </div>
-
+  
+  <div class="row">
+    <div class="col-md-4">
+      <h4>Song MIDI tool</h4>
+      Assign midi keys to KIT tracks in songs
+      <input class="btn btn btn-file" type="file" id="song" name="song" onchange="angular.element(this).scope().loadSongXml(this)"
+      title="{{'Loaded ' + filename}}" />
+    </div>
+      <div class="col-md-4">
+          <label for="fromDownrush">
+            or load via Downrush
+            <i class="glyphicon glyphicon-cloud-download"></i>
+          </label>
+          
+          <button class="btn btn-warning btn-xs" ng-show="loadSongListError" ng-click="loadSongList()">Retry</button>
+    
+          <select ng-show="songList || song" name="fromDownrush" ng-model="songSelected">
+            <option ng-repeat="s in songList">{{s}}</option>
+          </select>
+          <span ng-if="loading">
+            <i class="glyphicon glyphicon-refresh"></i>
+            {{loading}}
+          </span>
+          <!-- <button class="btn" ng-show="songSelected && !loading" ng-click="toggleMidi = !toggleMidi">Map MIDI</button> -->
+    
+          <div ng-show="songSelected || song">
+    
+            <label for="trackSelect">Select Track</label>
+            <select name="trackSelect" ng-model="trackSelected">
+              <option ng-repeat="track in _.castArray(song.song.tracks.track)" value="{{$index}}">{{trackKind(track)}} {{track.instrumentPresetSlot}}</option>
+            </select>
+    
+            <label for="midiChSelect">Select MIDI CH</label>
+            <select ng-show="trackSelected" name="midiChSelect" ng-model="midiChSelected">
+              <option ng-repeat="ch in [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16]">{{ch}}</option>
+            </select>
+    
+            <label for="startNoteSelect">Lowest Note</label>
+            <select ng-show="midiChSelected" ng-options="k as v for (k, v) in allNotes" name="startNoteSelect" ng-model="startNoteSelected">
+            </select>
+    
+            <div ng-show="startNoteSelected && midiChSelected">
+              <input type="text" ng-model="songFileName">
+              <button class="btn btn-primary btn-xs" ng-click="mapMidiCh('FILE', trackSelected, midiChSelected, startNoteSelected)">Download</button>
+              <button class="btn btn-success btn-xs" ng-click="mapMidiCh('DOWNRUSH', trackSelected, midiChSelected, startNoteSelected)">
+                <i class="glyphicon glyphicon-cloud-upload"></i>
+                Save to downrush
+              </button>
+              <span style="color: red;">{{midiError}}</span>
+            </div>
+          </div>
+        </div>
+  
+  </div>
   <div class="row">
 
     <div class="col-md-4">
-      <h4>KIT .xml File ({{filename}})</h4>
+      <h4>Edit KIT File ({{filename}})</h4>
       <input class="btn btn btn-file" type="file" id="file" name="file" onchange="angular.element(this).scope().loadXmlFile(this)"
         title="{{'Loaded ' + filename}}" />
     </div>
@@ -55,50 +108,7 @@
       sample settings! ) -->
       <!-- <span class="text-danger">CAUTION: Backup your deluge KIT file before overwriting!</span> -->
     </div>
-    <div class="col-md-4">
-      <label for="fromDownrush">
-        Load Song from Downrush
-        <i class="glyphicon glyphicon-cloud-download"></i>
-      </label>
-      
-      <button class="btn btn-warning btn-xs" ng-show="loadSongListError" ng-click="loadSongList()">Retry</button>
-
-      <select ng-show="songList" name="fromDownrush" ng-model="songSelected">
-        <option ng-repeat="song in songList">{{song}}</option>
-      </select>
-      <span ng-if="loading">
-        <i class="glyphicon glyphicon-refresh"></i>
-        {{loading}}
-      </span>
-      <!-- <button class="btn" ng-show="songSelected && !loading" ng-click="toggleMidi = !toggleMidi">Map MIDI</button> -->
-
-      <div ng-show="songSelected">
-
-        <label for="trackSelect">Select Track</label>
-        <select name="trackSelect" ng-model="trackSelected">
-          <option ng-repeat="track in _.castArray(song.song.tracks.track)" value="{{$index}}">{{trackKind(track)}} {{track.instrumentPresetSlot}}</option>
-        </select>
-
-        <label for="midiChSelect">Select MIDI CH</label>
-        <select ng-show="trackSelected" name="midiChSelect" ng-model="midiChSelected">
-          <option ng-repeat="ch in [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16]">{{ch}}</option>
-        </select>
-
-        <label for="startNoteSelect">Lowest Note</label>
-        <select ng-show="midiChSelected" ng-options="k as v for (k, v) in allNotes" name="startNoteSelect" ng-model="startNoteSelected">
-        </select>
-
-        <div ng-show="startNoteSelected && midiChSelected">
-          <input type="text" ng-model="songFileName">
-          <button class="btn btn-primary btn-xs" ng-click="mapMidiCh('FILE', trackSelected, midiChSelected, startNoteSelected)">Download</button>
-          <button class="btn btn-success btn-xs" ng-click="mapMidiCh('DOWNRUSH', trackSelected, midiChSelected, startNoteSelected)">
-            <i class="glyphicon glyphicon-cloud-upload"></i>
-            Save to downrush
-          </button>
-          <span style="color: red;">{{midiError}}</span>
-        </div>
-      </div>
-    </div>
+    
 
     <div class="" ng-if="model">
       <button class="btn btn-sm" ng-class="{'btn-warning': toggleDetail}" ng-click="toggleDetail = !toggleDetail">

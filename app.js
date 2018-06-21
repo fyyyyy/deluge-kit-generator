@@ -133,6 +133,24 @@ app.controller('MainCtrl', function($scope) {
     fetch('http://flashair/' + url, { method:'PUT', body: xml });
   }
 
+  $scope.loadSongXml = function() {
+    var f = document.getElementById('song').files[0],
+      r = new FileReader();
+
+    if (!f) return;
+    
+    r.onloadend = function(e) {
+      var xml = e.target.result;
+      $scope.loading = null;
+      $scope.songFileName = f.name;
+      $scope.song = UTILS.toJson(xml);
+      if(!$scope.$$phase) $scope.$apply(); 
+      console.log('​$scope.song', $scope.song);
+    }
+
+    r.readAsBinaryString(f);
+  }
+
   $scope.trackKind = UTILS.trackKind;
 
   $scope.mapMidiCh = function mapMidiCh(where, trackIndex, ch, startNote) {
@@ -174,6 +192,7 @@ app.controller('MainCtrl', function($scope) {
 
     r.readAsBinaryString(f);
   }
+
 
   $scope.loadedOSC = function(element, num) {
     var files = document.getElementById('osc' + num + 'files').files;
