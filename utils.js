@@ -172,6 +172,8 @@ function toJson(xml) {
 
 
 function toXml(json) {
+    // strip $$hashkey
+    json = JSON.parse(angular.toJson(json));
     return '<?xml version="1.0" encoding="UTF-8"?>\n' + json2xml(json, "\t");
 }
 
