@@ -132,6 +132,18 @@ function generateNotes() {
     return allNotes;
 }
 
+function generateValues() {
+    var noteMap = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B'];
+    var octaves = _.range(-1, 9);
+    var allNotes = {}
+    _.each(octaves, function (octave, x) {
+        _.each(noteMap, function (note, i) {
+            allNotes[note + (octave)] = i + x * 12;
+        });
+    });
+    return allNotes;
+}
+
 function findNote(val) {
     return UTILS.allNotes[val];
 }
@@ -206,7 +218,7 @@ UTILS = {
     toJson: toJson,
     parseNumber: parseNumber,
     allNotes: generateNotes(),
-    allValues: _.invert(generateNotes()),
+    allValues: generateValues(),
     findNote: findNote,
     findValue: findValue,
     trackKind: trackKind,

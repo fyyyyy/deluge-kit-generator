@@ -438,6 +438,7 @@ app.controller('MainCtrl', function($scope) {
     newSound.osc1.fileName = $scope.folderName1 + '/' + sample.name;
     // set transpose to 0
     newSound.osc1.transpose = 0;
+    newSound.osc2.transpose = 0;
 
     transposeNearest(sample.nearest, newSound.osc1, $scope.folderName1);
 
@@ -453,7 +454,7 @@ app.controller('MainCtrl', function($scope) {
       // no sample found for the note, mute OSC2
       newSound.defaultParams.oscBVolume = '0x80000000';
       newSound.osc2.fileName = '';
-      console.warn('No matching sample', newSound.name, '(', sample.value, ') for OSC2 found');
+      console.warn('No matching sample', newSound, '(', sample, ') for OSC2 found');
     }
 
     return newSound;
@@ -543,7 +544,7 @@ app.controller('MainCtrl', function($scope) {
     
     // pick next number for filename
     var filename = nextFilename(i || 0);
-    console.log(filename, category);
+    console.log('saveFile', filename, category);
 
     UTILS.createDownload($scope.output, filename);
   }
