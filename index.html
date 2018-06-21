@@ -25,12 +25,12 @@
   
   <div class="row">
     <div class="col-md-4">
-      <h4>Song MIDI tool</h4>
+      <h3>Song MIDI tool</h3>
       Assign midi keys to KIT tracks in songs
       <input class="btn btn btn-file" type="file" id="song" name="song" onchange="angular.element(this).scope().loadSongXml(this)"
       title="{{'Loaded ' + filename}}" />
     </div>
-      <div class="col-md-4">
+      <div class="col-md-8">
           <label for="fromDownrush">
             or load via Downrush
             <i class="glyphicon glyphicon-cloud-download"></i>
@@ -54,14 +54,18 @@
               <option ng-repeat="track in _.castArray(song.song.tracks.track)" value="{{$index}}">{{trackKind(track)}} {{track.instrumentPresetSlot}}</option>
             </select>
     
-            <label for="midiChSelect">Select MIDI CH</label>
-            <select ng-show="trackSelected" name="midiChSelect" ng-model="midiChSelected">
-              <option ng-repeat="ch in [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16]">{{ch}}</option>
-            </select>
+            <p  ng-show="trackSelected">
+              <label for="midiChSelect">Select MIDI CH</label>
+              <select name="midiChSelect" ng-model="midiChSelected">
+                <option ng-repeat="ch in [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16]">{{ch}}</option>
+              </select>
+            </p>
     
-            <label for="startNoteSelect">Lowest Note</label>
-            <select ng-show="midiChSelected" ng-options="k as v for (k, v) in allNotes" name="startNoteSelect" ng-model="startNoteSelected">
-            </select>
+            <p ng-show="midiChSelected">
+              <label for="startNoteSelect">Lowest Note</label>
+                <select ng-options="k as v for (k, v) in allNotes" name="startNoteSelect" ng-model="startNoteSelected">
+              </select>
+            </p>
     
             <div ng-show="startNoteSelected && midiChSelected">
               <input type="text" ng-model="songFileName">
@@ -79,7 +83,8 @@
   <div class="row">
 
     <div class="col-md-4">
-      <h4>Edit KIT File ({{filename}})</h4>
+      <h3>Edit KIT </h3>
+      ({{filename}})
       <input class="btn btn btn-file" type="file" id="file" name="file" onchange="angular.element(this).scope().loadXmlFile(this)"
         title="{{'Loaded ' + filename}}" />
     </div>
