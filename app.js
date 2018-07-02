@@ -262,6 +262,7 @@ app.controller('MainCtrl', function($scope) {
       
       if (!matches) {
         console.warn('could not identify note in name', matches, file);
+        return file;
       };
       
       var value = Number(matches.value);
@@ -442,13 +443,14 @@ app.controller('MainCtrl', function($scope) {
     }
   }
 
-  function createSoundXml(category, sample) {
+  function createSoundXml(category, sample, i) {
+    console.log('​createSoundXml -> i', i);
     var newSound = _.cloneDeep(this);
 
     // only use note value as name, e.g. F#4
-    newSound.name = sample.note;
+    newSound.name = sample.note || ('SA-' + i.toString());
     
-    if(!newSound.name) console.warn('no name found -> ', sample);
+    // if(!newSound.name) console.warn('no name found -> ', sample);
     
     // Deluge cannot render '#'. F#4 -> FX4
     newSound.name = newSound.name.replace('#', 'X');
