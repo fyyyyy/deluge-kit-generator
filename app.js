@@ -453,7 +453,7 @@ app.controller('MainCtrl', function($scope) {
     var newSound = _.cloneDeep(this);
 
     // only use note value as name, e.g. F#4
-    newSound.name = sample.note || ('SA-' + i.toString());
+    newSound.name = sample.note || ('SP-' + i.toString());
     
     // if(!newSound.name) console.warn('no name found -> ', sample);
     

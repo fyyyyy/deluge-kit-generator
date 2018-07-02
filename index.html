@@ -166,10 +166,12 @@
           ({{bounds.lower}}) and
           <label for="upperBound">highest note</label>
           <select ng-options="v as k for (v, k) in allNotes" name="upperBound" ng-model="bounds.upper"></select>
-          ({{bounds.upper}}) for kit(s).
+          ({{bounds.upper}})
+          <br/>
           <br/>
           <label for="maxTranspose">Max transpose</label>
-          <input type="number" ng-model="bounds.maxTranspose" min="0" name="maxTranspose"> (for missing samples)
+          <input type="number" ng-model="bounds.maxTranspose" min="0" name="maxTranspose"> halftones
+          <br/><i class="text-info">Set to 0 if you dont want any transposed samples, e.g. drum kit</i>
         </div>
       </div>
       <form ng-show="toggleGlobal" class="col" sf-schema="schema_osc" sf-form="['*']" sf-model="osc">
