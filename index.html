@@ -217,8 +217,8 @@
             ng-repeat="file in sampleNames"
             ng-class="{missing: file.nearest}"
             id="{{'osc1_' + file.name + $index}}">
-            <td ng-bind-html="file.value"></td>
-            <td ng-bind-html="file.note"></td>
+            <td ng-bind-html="file.value || '?'"></td>
+            <td ng-bind-html="file.note || '?'"></td>
             <td ng-bind-html="file.name | highlight"></td>
             <td ng-class="file.nearest.transpose > 0 ? 'plus' : 'minus'">
               {{ file.nearest.transpose }}
