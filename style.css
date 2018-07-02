@@ -15,6 +15,18 @@ textarea.preview {
   padding: 0.5em;
 }
 
+.subtitle {
+  font-size: 0.5em;
+  font-weight: normal;
+}
+
+.menu {
+  list-style: none;
+}
+.menu li {
+  display: inline-block;
+}
+
 .row {
   border-bottom: 1px solid #ccc;
   padding: 1em;

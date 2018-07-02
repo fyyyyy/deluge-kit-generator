@@ -34,6 +34,11 @@ app.controller('MainCtrl', function($scope) {
 
   $scope.allNotes = UTILS.allNotes;
   $scope.kitList = null;
+  $scope.menu = 'generator';
+
+  $scope.toggleMenu = function(menu) {
+    $scope.menu = menu;
+  }
 
   $scope.search = function (fileName) {
     var results = _.map(patterns, function (regex, groups) {
@@ -180,7 +185,7 @@ app.controller('MainCtrl', function($scope) {
   }
 
 
-  $scope.loadXmlFile = function() {
+  $scope.loadXmlKit = function() {
     var f = document.getElementById('file').files[0],
       r = new FileReader();
 

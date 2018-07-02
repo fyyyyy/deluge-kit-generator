@@ -16,87 +16,111 @@
 <body ng-controller="MainCtrl" class="container">
   <textarea class="preview" ng-show="togglePreview" class="form-control" ng-model="output" name="xml-output"></textarea>
 
-  <div class="bar">
-    <h2>
-      <i class="glyphicon glyphicon-road"></i>
-      DELUGE KIT GENERATOR 1.1
-    </h2>by frankyyyy ät live.com
+  <div class="bar row">
+    <div class="col-md-12">
+
+      <h2>
+        <i class="glyphicon glyphicon-road"></i>
+        DELUGE KIT GENERATOR 1.1
+        <span class="subtitle">
+          by
+          <a href="https://github.com/fyyyyy">fyyyy</a>
+        </span>
+      </h2>
+    </div>
+
+
+
+    <div class="col-md-12">
+      <ul class="menu">
+        <li>
+          <button class="btn btn-primary" ng-click="toggleMenu('generator')">Kit Generator</button>
+        </li>
+        <li>
+          <button class="btn btn-primary" ng-click="toggleMenu('editKit')">Edit Kit</button>
+        </li>
+        <li>
+          <button class="btn btn-primary" ng-click="toggleMenu('midi')">Song MIDI Tool</button>
+        </li>
+      </ul>
+    </div>
+
   </div>
-  
-  <div class="row">
+
+  <div class="row" ng-show="menu === 'midi'">
     <div class="col-md-4">
       <h3>Song MIDI tool</h3>
       Assign midi keys to KIT tracks in songs
       <input class="btn btn btn-file" type="file" id="song" name="song" onchange="angular.element(this).scope().loadSongXml(this)"
-      title="{{'Loaded ' + filename}}" />
+        title="{{'Loaded ' + filename}}" />
     </div>
-      <div class="col-md-8">
-          <label for="fromDownrush">
-            or load via Downrush
-            <i class="glyphicon glyphicon-cloud-download"></i>
-          </label>
-          
-          <button class="btn btn-warning btn-xs" ng-show="loadSongListError" ng-click="loadSongList()">Retry</button>
-    
-          <select ng-show="songList || song" name="fromDownrush" ng-model="songSelected">
-            <option ng-repeat="s in songList">{{s}}</option>
+    <div class="col-md-8">
+      <label for="fromDownrush">
+        or load via Flashair / Downrush
+        <i class="glyphicon glyphicon-cloud-download"></i>
+      </label>
+
+      <button class="btn btn-warning btn-xs" ng-show="loadSongListError" ng-click="loadSongList()">Retry</button>
+
+      <select ng-show="songList || song" name="fromDownrush" ng-model="songSelected">
+        <option ng-repeat="s in songList">{{s}}</option>
+      </select>
+      <span ng-if="loading">
+        <i class="glyphicon glyphicon-refresh"></i>
+        {{loading}}
+      </span>
+      <!-- <button class="btn" ng-show="songSelected && !loading" ng-click="toggleMidi = !toggleMidi">Map MIDI</button> -->
+
+      <div ng-show="songSelected || song">
+
+        <label for="trackSelect">Select Track</label>
+        <select name="trackSelect" ng-model="trackSelected">
+          <option ng-repeat="track in _.castArray(song.song.tracks.track)" value="{{$index}}">{{trackKind(track)}} {{track.instrumentPresetSlot}}</option>
+        </select>
+
+        <p ng-show="trackSelected">
+          <label for="midiChSelect">Select MIDI CH</label>
+          <select name="midiChSelect" ng-model="midiChSelected">
+            <option ng-repeat="ch in [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16]">{{ch}}</option>
           </select>
-          <span ng-if="loading">
-            <i class="glyphicon glyphicon-refresh"></i>
-            {{loading}}
-          </span>
-          <!-- <button class="btn" ng-show="songSelected && !loading" ng-click="toggleMidi = !toggleMidi">Map MIDI</button> -->
-    
-          <div ng-show="songSelected || song">
-    
-            <label for="trackSelect">Select Track</label>
-            <select name="trackSelect" ng-model="trackSelected">
-              <option ng-repeat="track in _.castArray(song.song.tracks.track)" value="{{$index}}">{{trackKind(track)}} {{track.instrumentPresetSlot}}</option>
-            </select>
-    
-            <p  ng-show="trackSelected">
-              <label for="midiChSelect">Select MIDI CH</label>
-              <select name="midiChSelect" ng-model="midiChSelected">
-                <option ng-repeat="ch in [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16]">{{ch}}</option>
-              </select>
-            </p>
-    
-            <p ng-show="midiChSelected">
-              <label for="startNoteSelect">Lowest Note</label>
-                <select ng-options="k as v for (k, v) in allNotes" name="startNoteSelect" ng-model="startNoteSelected">
-              </select>
-            </p>
-    
-            <div ng-show="startNoteSelected && midiChSelected">
-              <input type="text" ng-model="songFileName">
-              <button class="btn btn-primary btn-xs" ng-click="mapMidiCh('FILE', trackSelected, midiChSelected, startNoteSelected)">Download</button>
-              <button class="btn btn-success btn-xs" ng-click="mapMidiCh('DOWNRUSH', trackSelected, midiChSelected, startNoteSelected)">
-                <i class="glyphicon glyphicon-cloud-upload"></i>
-                Save to downrush
-              </button>
-              <span style="color: red;">{{midiError}}</span>
-            </div>
-          </div>
+        </p>
+
+        <p ng-show="midiChSelected">
+          <label for="startNoteSelect">Lowest Note</label>
+          <select ng-options="k as v for (k, v) in allNotes" name="startNoteSelect" ng-model="startNoteSelected">
+          </select>
+        </p>
+
+        <div ng-show="startNoteSelected && midiChSelected">
+          <input type="text" ng-model="songFileName">
+          <button class="btn btn-primary btn-xs" ng-click="mapMidiCh('FILE', trackSelected, midiChSelected, startNoteSelected)">Download</button>
+          <button class="btn btn-success btn-xs" ng-click="mapMidiCh('DOWNRUSH', trackSelected, midiChSelected, startNoteSelected)">
+            <i class="glyphicon glyphicon-cloud-upload"></i>
+            Save via Flashair / Downrush
+          </button>
+          <span style="color: red;">{{midiError}}</span>
         </div>
-  
+      </div>
+    </div>
   </div>
-  <div class="row">
+
+  <div class="row" ng-show="menu === 'editKit'">
 
     <div class="col-md-4">
       <h3>Edit KIT </h3>
       ({{filename}})
-      <input class="btn btn btn-file" type="file" id="file" name="file" onchange="angular.element(this).scope().loadXmlFile(this)"
+      <input class="btn btn btn-file" type="file" id="file" name="file" onchange="angular.element(this).scope().loadXmlKit(this)"
         title="{{'Loaded ' + filename}}" />
     </div>
 
     <div class="col-md-4">
       <label for="fromDownrush">
-        Load Kit from Downrush
+        Load Kit via Flashair / Downrush
         <i class="glyphicon glyphicon-cloud-download"></i>
       </label>
 
       <button class="btn btn-warning btn-xs" ng-show="loadKitListError" ng-click="loadKitList()">Retry</button>
-      
+
       <select ng-show="kitList" name="fromDownrush" ng-model="kitSelected">
         <option ng-repeat="kit in kitList">{{kit}}</option>
       </select>
@@ -104,176 +128,168 @@
         <i class="glyphicon glyphicon-refresh"></i>
         {{loading}}
       </span>
-      
-      <!-- <button class="btn btn-success" ng-click="generate()" ng-if="sampleCategories1">
-        <i class="glyphicon glyphicon-cd"></i>
-        &nbsp;GENERATE KIT FROM FOLDERS
-      </button>
-      <br/>( Creates sample entries for each file in the OSC1 and OSC2 folders. Overrides all individual sample settings with global
-      sample settings! ) -->
-      <!-- <span class="text-danger">CAUTION: Backup your deluge KIT file before overwriting!</span> -->
     </div>
-    
 
-    <div class="" ng-if="model">
-      <button class="btn btn-sm" ng-class="{'btn-warning': toggleDetail}" ng-click="toggleDetail = !toggleDetail">
-        <i class="glyphicon glyphicon-edit"></i>
-        Individual Sample settings &nbsp;&nbsp;
-        <i ng-if="!toggleDetail" class="glyphicon glyphicon-chevron-right"></i>
-        <i ng-if="toggleDetail" class="glyphicon glyphicon-chevron-down"></i>
-      </button>
-      <form ng-show="toggleDetail" class="col" sf-schema="schema" sf-form="form" sf-model="model"></form>
+    <!-- <button class="btn btn-success" ng-click="generate()" ng-if="sampleCategories1">
+      <i class="glyphicon glyphicon-cd"></i>
+      &nbsp;GENERATE KIT FROM FOLDERS
+    </button>
+    <br/>( Creates sample entries for each file in the OSC1 and OSC2 folders. Overrides all individual sample settings with global
+    sample settings! ) -->
+    <!-- <span class="text-danger">CAUTION: Backup your deluge KIT file before overwriting!</span> -->
+
+    <div class="col-md-12" ng-if="model">
+      <hr>
+      <h4>Individual Sample settings</h4>
+      <form class="col" sf-schema="schema" sf-form="form" sf-model="model"></form>
     </div>
+
   </div>
 
-  <div ng-if="model">
+
+  <div class="row" ng-show="menu === 'generator'">
+
+    <div ng-if="model">
+      <div class="row">
+        <div class="col-md-5">
+          <button class="btn btn-info" ng-class="{'btn-warning': toggleGlobal}" ng-click="toggleGlobal = !toggleGlobal">
+            <i class="glyphicon glyphicon-globe"></i>
+            Global Sample Settings &nbsp;&nbsp;
+            <i ng-if="!toggleGlobal" class="glyphicon glyphicon-chevron-right"></i>
+            <i ng-if="toggleGlobal" class="glyphicon glyphicon-chevron-down"></i>
+          </button>
+        </div>
+        <div class="col-sm-7">
+          Use
+          <label for="lowerBound">lowest note</label>
+          <select ng-options="k as v for (k, v) in allNotes" name="lowerBound" ng-model="bounds.lower"></select>
+          ({{bounds.lower}}) and
+          <label for="upperBound">highest note</label>
+          <select ng-options="v as k for (v, k) in allNotes" name="upperBound" ng-model="bounds.upper"></select>
+          ({{bounds.upper}}) for kit(s).
+          <br/>
+          <label for="maxTranspose">Max transpose</label>
+          <input type="number" ng-model="bounds.maxTranspose" min="0" name="maxTranspose"> (for missing samples)
+        </div>
+      </div>
+      <form ng-show="toggleGlobal" class="col" sf-schema="schema_osc" sf-form="['*']" sf-model="osc">
+      </form>
+    </div>
+
     <div class="row">
       <div class="col-md-5">
-        <button class="btn btn-info" ng-class="{'btn-warning': toggleGlobal}" ng-click="toggleGlobal = !toggleGlobal">
-          <i class="glyphicon glyphicon-globe"></i>
-          Global Sample Settings &nbsp;&nbsp;
-          <i ng-if="!toggleGlobal" class="glyphicon glyphicon-chevron-right"></i>
-          <i ng-if="toggleGlobal" class="glyphicon glyphicon-chevron-down"></i>
-        </button>
-      </div>
-      <div class="col-sm-7">
-        Use
-        <label for="lowerBound">lowest note</label>
-        <select ng-options="k as v for (k, v) in allNotes" name="lowerBound" ng-model="bounds.lower"></select>
-        ({{bounds.lower}})
-        and
-        <label for="upperBound">highest note</label>
-        <select ng-options="v as k for (v, k) in allNotes" name="upperBound" ng-model="bounds.upper"></select>
-        ({{bounds.upper}})
-        for kit(s).
-        <br/>
-        <label for="maxTranspose">Max transpose</label>
-        <input type="number" ng-model="bounds.maxTranspose" min="0" name="maxTranspose"> (for missing samples)
-      </div>
-    </div>
-    <form ng-show="toggleGlobal" class="col" sf-schema="schema_osc" sf-form="['*']" sf-model="osc">
-    </form>
-  </div>
-
-  <div class="row">
-    <div class="col-md-5">
-      <h3>OSC1</h3>
-      <div class="form-group">
-        <input class="foldername" type="string" ng-model="folderName1" />
-      </div>
-      <div class="form-group">
-        <input type="file" multiple class="btn btn-file" id="osc1files" title="OSC1 sample directory" onchange="angular.element(this).scope().loadedOSC(this, 1)"
-        />
-        <label>
-          <input type="checkbox" ng-model="multi" ng-checked="multi">
-          <span>Multiple Kits?</span>
-        </label>
-      </div>
-      <div class="form-group" ng-show="multi">
-        <label for="kitStartNumber">Kit start number</label> (for saving)
-        <input type="number" ng-model="kitStartNumber" name="kitStartNumber">
-        <select ng-model="naming">
-        <option>Numeric</option>
-        <option>Alphabetic</option>
-        </select>
-      </div>
-      <div class="form-group">
-        <button ng-if="multi" class="btn btn-success" ng-click="saveAll()">
-          <i class="glyphicon glyphicon-floppy-disk"></i>
-          Save All {{_.keys(sampleCategories1).length}} Kits
-        </button>
-      </div>
-    </div>
-    <div class="col-md-7">
-      <ul ng-repeat="(category, sampleNames) in sampleCategories1">
-        <h4>{{category}}
-          <button class="btn btn-primary btn-xs" ng-click="saveFile(category, $index)">
+        <h3>OSC1</h3>
+        <div class="form-group">
+          <input class="foldername" type="string" ng-model="folderName1" />
+        </div>
+        <div class="form-group">
+          <input type="file" multiple class="btn btn-file" id="osc1files" title="OSC1 sample directory" onchange="angular.element(this).scope().loadedOSC(this, 1)"
+          />
+          <label>
+            <input type="checkbox" ng-model="multi" ng-checked="multi">
+            <span>Multiple Kits?</span>
+          </label>
+        </div>
+        <div class="form-group" ng-show="multi">
+          <label for="kitStartNumber">Kit start number</label> (for saving)
+          <input type="number" ng-model="kitStartNumber" name="kitStartNumber">
+          <select ng-model="naming">
+            <option>Numeric</option>
+            <option>Alphabetic</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <button ng-if="multi" class="btn btn-success" ng-click="saveAll()">
             <i class="glyphicon glyphicon-floppy-disk"></i>
-            SAVE {{nextFilename($index)}}
+            Save All {{_.keys(sampleCategories1).length}} Kits
           </button>
-          &nbsp;
-          <a class="btn btn-xs" ng-click="togglePreview = !togglePreview">
-            <i class="glyphicon glyphicon-eye-open"></i>
-            Preview XML
-          </a>
-        </h4>
-        <button class="btn btn-xs" ng-init="togglSampleList = true" ng-click="togglSampleList = !togglSampleList">
-          <a>
-           <i class="glyphicon glyphicon-list-alt"></i>
-            {{togglSampleList ? 'Hide' : 'Show'}} {{_.reject(sampleNames, 'nearest').length}} samples
-            and {{_.filter(sampleNames, 'nearest').length}} transposed samples
+        </div>
+      </div>
+      <div class="col-md-7">
+        <ul ng-repeat="(category, sampleNames) in sampleCategories1">
+          <h4>{{category}}
+            <button class="btn btn-primary btn-xs" ng-click="saveFile(category, $index)">
+              <i class="glyphicon glyphicon-floppy-disk"></i>
+              SAVE {{nextFilename($index)}}
+            </button>
+            &nbsp;
+            <a class="btn btn-xs" ng-click="togglePreview = !togglePreview">
+              <i class="glyphicon glyphicon-eye-open"></i>
+              Preview XML
+            </a>
+          </h4>
+          <button class="btn btn-xs" ng-init="togglSampleList = true" ng-click="togglSampleList = !togglSampleList">
+            <a>
+              <i class="glyphicon glyphicon-list-alt"></i>
+              {{togglSampleList ? 'Hide' : 'Show'}} {{_.reject(sampleNames, 'nearest').length}} samples and {{_.filter(sampleNames, 'nearest').length}}
+              transposed samples
 
               <i ng-if="!togglSampleList" class="glyphicon glyphicon-chevron-right"></i>
               <i ng-if="togglSampleList" class="glyphicon glyphicon-chevron-down"></i>
-           </a>
-        </button>
-        <div ng-if="togglSampleList">
-          <table>
-          <th>Value</th>
-          <th>Note</th>
-          <th>Sample</th>
-          <th>Transpose</th>
-          <tr class="file"
-            ng-repeat="file in sampleNames"
-            ng-class="{missing: file.nearest}"
-            id="{{'osc1_' + file.name + $index}}">
-            <td ng-bind-html="file.value || '?'"></td>
-            <td ng-bind-html="file.note || '?'"></td>
-            <td ng-bind-html="file.name | highlight"></td>
-            <td ng-class="file.nearest.transpose > 0 ? 'plus' : 'minus'">
-              {{ file.nearest.transpose }}
-            </td>
-          </tr>
-          </table>
-        </div>
-      </ul>
-    </div>
-  </div>
-
-  <div class="row">
-    <div class="col-md-5">
-      <h3>OSC2</h3>
-      <input class="foldername" type="string" ng-model="folderName2">
-      <input type="file" multiple class="btn btn-file" id="osc2files" title="OSC2 sample directory" onchange="angular.element(this).scope().loadedOSC(this, 2)"
-      />
-    </div>
-    <div class="col-md-7">
-      <ul ng-repeat="(category, sampleNames) in sampleCategories2">
-          <h4>{{category}} </h4>
-          <button class="btn btn-xs" ng-init="togglSampleList = true" ng-click="togglSampleList = !togglSampleList">
-            <a>
-             <i class="glyphicon glyphicon-list-alt"></i>
-              {{togglSampleList ? 'Hide' : 'Show'}} {{_.reject(sampleNames, 'nearest').length}} samples
-              and {{_.filter(sampleNames, 'nearest').length}} transposed samples
-  
-                <i ng-if="!togglSampleList" class="glyphicon glyphicon-chevron-right"></i>
-                <i ng-if="togglSampleList" class="glyphicon glyphicon-chevron-down"></i>
-             </a>
+            </a>
           </button>
           <div ng-if="togglSampleList">
             <table>
-            <th>Value</th>
-            <th>Note</th>
-            <th>Sample</th>
-            <th>Transpose</th>
-            <tr class="file"
-              ng-repeat="file in sampleNames"
-              ng-class="{missing: file.nearest}"
-              id="{{'osc2_' + file.name + $index}}">
-              <td ng-bind-html="file.value"></td>
-              <td ng-bind-html="file.note"></td>
-              <td ng-bind-html="file.name | highlight"></td>
-              <td ng-class="file.nearest.transpose > 0 ? 'plus' : 'minus'">
-                {{ file.nearest.transpose }}
-              </td>
-            </tr>
+              <th>Value</th>
+              <th>Note</th>
+              <th>Sample</th>
+              <th>Transpose</th>
+              <tr class="file" ng-repeat="file in sampleNames" ng-class="{missing: file.nearest}" id="{{'osc1_' + file.name + $index}}">
+                <td ng-bind-html="file.value || '?'"></td>
+                <td ng-bind-html="file.note || '?'"></td>
+                <td ng-bind-html="file.name | highlight"></td>
+                <td ng-class="file.nearest.transpose > 0 ? 'plus' : 'minus'">
+                  {{ file.nearest.transpose }}
+                </td>
+              </tr>
             </table>
           </div>
         </ul>
+      </div>
     </div>
+
+    <div class="row">
+      <div class="col-md-5">
+        <h3>OSC2</h3>
+        <input class="foldername" type="string" ng-model="folderName2">
+        <input type="file" multiple class="btn btn-file" id="osc2files" title="OSC2 sample directory" onchange="angular.element(this).scope().loadedOSC(this, 2)"
+        />
+      </div>
+      <div class="col-md-7">
+        <ul ng-repeat="(category, sampleNames) in sampleCategories2">
+          <h4>{{category}} </h4>
+          <button class="btn btn-xs" ng-init="togglSampleList = true" ng-click="togglSampleList = !togglSampleList">
+            <a>
+              <i class="glyphicon glyphicon-list-alt"></i>
+              {{togglSampleList ? 'Hide' : 'Show'}} {{_.reject(sampleNames, 'nearest').length}} samples and {{_.filter(sampleNames, 'nearest').length}}
+              transposed samples
+
+              <i ng-if="!togglSampleList" class="glyphicon glyphicon-chevron-right"></i>
+              <i ng-if="togglSampleList" class="glyphicon glyphicon-chevron-down"></i>
+            </a>
+          </button>
+          <div ng-if="togglSampleList">
+            <table>
+              <th>Value</th>
+              <th>Note</th>
+              <th>Sample</th>
+              <th>Transpose</th>
+              <tr class="file" ng-repeat="file in sampleNames" ng-class="{missing: file.nearest}" id="{{'osc2_' + file.name + $index}}">
+                <td ng-bind-html="file.value"></td>
+                <td ng-bind-html="file.note"></td>
+                <td ng-bind-html="file.name | highlight"></td>
+                <td ng-class="file.nearest.transpose > 0 ? 'plus' : 'minus'">
+                  {{ file.nearest.transpose }}
+                </td>
+              </tr>
+            </table>
+          </div>
+        </ul>
+      </div>
+    </div>
+
+
   </div>
-
-
 
 
 
